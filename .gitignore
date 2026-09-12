@@ -1,0 +1,20 @@
+# ---- Operating system junk ----
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- Editor / IDE files ----
+.vscode/
+.idea/
+*.swp
+*~
+
+# ---- Node / tooling (only matters if tools get added later) ----
+node_modules/
+npm-debug.log*
+.env
+.env.local
+
+# ---- Misc ----
+*.log
+.cache/

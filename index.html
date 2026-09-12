@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- The sha256 is of the one-line <script> below: change that line and
+       this hash must change with it. Adding a new source: README, "Security". -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-/x7W7R75k8Roq0WaVRQX9blP4OufE5xbAdzklGxsgpw='; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https://i.ytimg.com data:; connect-src https://formspree.io; object-src 'self'; frame-src 'self'; form-action https://formspree.io; base-uri 'none'; require-trusted-types-for 'script'; upgrade-insecure-requests" />
+  <meta name="referrer" content="no-referrer" />
+  <!-- Effects that need JavaScript start hidden only when this class is set,
+       so a visitor without scripts never meets a blank state. -->
+  <script>document.documentElement.classList.add('js');</script>
+
+  <!-- ===== EDIT ME: page title (shows in the browser tab) ===== -->
+  <title>Hao Bui — Filmmaker, Boston</title>
+
+  <!-- ===== EDIT ME: description for Google & link previews ===== -->
+  <meta name="description" content="Hao Bui, filmmaker and photographer in Boston. Places he's been, cut the way he remembers them; promos, event coverage and social content for brands." />
+
+  <meta property="og:title" content="Hao Bui — Filmmaker" />
+  <meta property="og:description" content="Filmmaker and photographer in Boston. Places I've been, cut the way I remember them." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://directedbyhao.com" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- The page's own three faces. The extra faces the name flickers through
+       are listed once in site.js, which loads them itself. -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500&family=DM+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- Covers the page until fonts are in, then lifts. site.js owns it. -->
+  <div class="curtain" id="curtain" aria-hidden="true"></div>
+
+  <!-- Pinned bar. Solid at the top of the page, translucent once scrolled.
+       The tabs jump to the sections below; the one on screen is underlined. -->
+  <header class="site-header">
+    <a class="brand" href="#top">Home</a>
+    <nav class="tabs" aria-label="Sections">
+      <a href="#films">Films</a>
+      <a href="#travel">Travel</a>
+      <a href="#places">Places</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+
+  <!-- ============================================================
+       HERO
+       The name sits centred over the photo, blended into it.
+       EDIT ME: name in the <h1>, the line under it, the two lines bottom-right.
+       ============================================================ -->
+  <header id="top" class="hero">
+
+    <!-- ---- HERO PHOTO ---------------------------------------------
+         EDIT ME: each <img> is one slide; two or more slide in turn.
+         Upload to images/ and copy a line. See images/README.md.
+         The footer reuses these automatically.
+         ------------------------------------------------------------- -->
+    <div class="hero-slides" aria-hidden="true">
+      <img class="slide is-active" src="images/hero-1.jpg" alt="" />
+      <img class="slide" src="images/hero-2.jpg" alt="" />
+      <img class="slide" src="images/hero-3.jpg" alt="" />
+      <img class="slide" src="images/hero-4.jpg" alt="" />
+    </div>
+
+    <div class="headline">
+      <h1 class="headline-text">Hao Bui</h1>
+      <!-- EDIT ME: the line under your name -->
+      <p class="headline-sub">Places I've been, cut the way I remember them.</p>
+    </div>
+
+    <ul class="hero-socials">
+      <li><a href="https://www.youtube.com/@haoismylife" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+      <li><a href="https://www.instagram.com/directedbyhao/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+    </ul>
+
+    <p class="hero-role">Filmmaker<br />Boston, MA</p>
+  </header>
+
+  <!-- ============================================================
+       FILMS
+       A carousel of the vlogs: the current one sits centred with the ones
+       before and after peeking in from the sides, and fills the screen
+       behind, blurred. The list is the data, newest first.
+       EDIT ME: to add a vlog copy a whole <li>. The ID after "watch?v="
+       appears twice. The two lines under it are the title and the date
+       and place; an optional third <p class="reel-line"> shows a note.
+       ============================================================ -->
+  <section id="films" class="screen screen--band">
+    <div class="screen-inner">
+      <h2 class="screen-title" data-reveal>Films</h2>
+      <div class="reel" data-reveal>
+        <a class="reel-all" href="https://www.youtube.com/@haoismylife/videos" target="_blank" rel="noopener noreferrer">All videos →</a>
+        <ul class="reel-items">
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=i70SC0lMAQ4" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/i70SC0lMAQ4/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">Using DJI Action 5 Pro &amp; Insta360 Ace Pro 2 to vlog in South Carolina</h3>
+            <p class="reel-when mono">Aug 30, 2026 · South Carolina</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=d-yabYQ1DlU" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/d-yabYQ1DlU/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">Trip Vlog ✈️ south carolina w/ my friends | clemson uni, secret santa, &amp; more!</h3>
+            <p class="reel-when mono">Aug 28, 2026 · Clemson, SC</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=O41Cu7dW2po" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/O41Cu7dW2po/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">My friend did NOT make it through the night...</h3>
+            <p class="reel-when mono">Aug 10, 2026</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=sW0IaUrJNFs" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/sW0IaUrJNFs/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">Meeting my Friends after 2 years | Cabin trip vlog 📸</h3>
+            <p class="reel-when mono">Jul 31, 2026</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=oVJ9jfe5sHA" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/oVJ9jfe5sHA/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">Strangest 23rd Birthday I've ever experienced...</h3>
+            <p class="reel-when mono">Jul 23, 2026</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=AEY292PFZ9A" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/AEY292PFZ9A/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">trying the BEST INDIAN restaurant in texas | part 2</h3>
+            <p class="reel-when mono">Jul 18, 2026 · Houston, TX</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=Km63-wTDMJc" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/Km63-wTDMJc/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">shooting range in Texas 🇺🇸 reunion, ultimate jenga, &amp; famous restaurants!</h3>
+            <p class="reel-when mono">Jul 15, 2026 · Houston, TX</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=RHHK4rMCw3A" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/RHHK4rMCw3A/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">life in america 🇺🇸 umass amherst dining hall, fenway, car incident, &amp; more</h3>
+            <p class="reel-when mono">Jul 10, 2026 · Massachusetts</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=8IEeTH36jbw" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/8IEeTH36jbw/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">Making the Most of My Last Days Before University</h3>
+            <p class="reel-when mono">Jun 28, 2026</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=nN7LcE9YkXw" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/nN7LcE9YkXw/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">going to my first ever trip to the mountains! 🏔️</h3>
+            <p class="reel-when mono">Jun 21, 2026 · Thornton, NH</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <!-- ============================================================
+       TRAVEL
+       The same carousel as Films, with photos. The list is the data,
+       newest first.
+       EDIT ME: to add a photo copy a whole <li>: the picture (with its
+       width and height in pixels), then the title, then the date and
+       place. Photos with a pin on the map live in images/places/<place>/,
+       the rest in images/travel/ .
+       ============================================================ -->
+  <section id="travel" class="screen screen--band">
+    <div class="screen-inner">
+      <h2 class="screen-title" data-reveal>Travel</h2>
+      <div class="reel" data-reveal>
+        <a class="reel-all" href="https://www.instagram.com/directedbyhao/" target="_blank" rel="noopener noreferrer">More on Instagram →</a>
+        <ul class="reel-items">
+          <li>
+            <img src="images/places/jeju/JEJU.jpg" alt="Jeju Island" width="960" height="1200" loading="lazy" />
+            <h3 class="reel-title">Jeju Island</h3>
+            <p class="reel-when mono">Jeju, South Korea</p>
+          </li>
+          <li>
+            <img src="images/places/gangneung/TRIP.jpg" alt="Trip to Gangneung" width="900" height="1200" loading="lazy" />
+            <h3 class="reel-title">Trip to Gangneung</h3>
+            <p class="reel-when mono">Gangneung, South Korea</p>
+          </li>
+          <li>
+            <img src="images/travel/DSC00883.jpg" alt="Windmill by the sea" width="1200" height="800" loading="lazy" />
+            <h3 class="reel-title">Windmill by the sea</h3>
+            <p class="reel-when mono">Mar 21, 2025</p>
+          </li>
+          <li>
+            <img src="images/travel/DSC01015.jpg" alt="Fishing off the rocks" width="800" height="1200" loading="lazy" />
+            <h3 class="reel-title">Fishing off the rocks</h3>
+            <p class="reel-when mono">Mar 22, 2025</p>
+          </li>
+          <li>
+            <img src="images/travel/DSC00987.jpg" alt="Red bridge over the rocks" width="800" height="1200" loading="lazy" />
+            <h3 class="reel-title">Red bridge over the rocks</h3>
+            <p class="reel-when mono">Mar 22, 2025</p>
+          </li>
+          <li>
+            <img src="images/places/seoul/DSC01447.jpg" alt="Cherry blossoms at night" width="900" height="1200" loading="lazy" />
+            <h3 class="reel-title">Cherry blossoms at night</h3>
+            <p class="reel-when mono">Apr 7, 2025 · Seoul</p>
+          </li>
+          <li>
+            <img src="images/travel/DSC03189.jpg" alt="Sunset over the sandbar" width="1200" height="675" loading="lazy" />
+            <h3 class="reel-title">Sunset over the sandbar</h3>
+            <p class="reel-when mono">May 17, 2025</p>
+          </li>
+          <li>
+            <img src="images/places/jeju/DSC00354.jpg" alt="Jeju coast at dusk" width="1200" height="675" loading="lazy" />
+            <h3 class="reel-title">Jeju coast at dusk</h3>
+            <p class="reel-when mono">Jun 9, 2025 · Jeju, South Korea</p>
+          </li>
+          <li>
+            <img src="images/places/osaka/DSC00578.jpg" alt="Dotonbori at night" width="1200" height="800" loading="lazy" />
+            <h3 class="reel-title">Dotonbori at night</h3>
+            <p class="reel-when mono">Jun 28, 2025 · Osaka</p>
+          </li>
+          <li>
+            <img src="images/places/kyoto/DSC00627.jpg" alt="Kyoto from the temple terrace" width="1200" height="800" loading="lazy" />
+            <h3 class="reel-title">Kyoto from the temple terrace</h3>
+            <p class="reel-when mono">Jul 1, 2025 · Kyoto</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <!-- ============================================================
+       PLACES
+       The map is the screen. One pin is drawn per <li class="place"> in
+       the list at the end of this section, at its data-lat / data-lon;
+       click a pin and everything listed under it opens in a full-screen
+       reel. A pin can be a city or a whole region — on a world map cities
+       30 km apart share one dot, and each item's own date-and-place line
+       says which city it is.
+       EDIT ME: to add a place copy a whole <li class="place"> block.
+       Latitude/longitude are decimal degrees (south and west negative).
+       Each photo or clip is an <li> like the ones in Films and Travel: the
+       picture, then title, date and place, and an optional extra line.
+       Photos go in images/places/<place>/ .
+       ============================================================ -->
+  <section id="places" class="screen screen--ink screen--map">
+    <div class="atlas" data-reveal>
+      <!-- The map is the Robinson world cropped above Antarctica (see
+           images/README.md). On phones the canvas is wider than the screen
+           and pans sideways. -->
+      <div class="atlas-map">
+        <div class="atlas-canvas">
+          <img class="atlas-world" src="images/world.png" alt="World map" width="2400" height="1048" />
+          <div class="atlas-pins"></div>
+        </div>
+      </div>
+
+      <div class="atlas-head">
+        <h2 class="screen-title" data-reveal>Places</h2>
+        <p class="atlas-hint mono"></p>
+      </div>
+
+      <ol class="places">
+      <li class="place" data-lat="42.36" data-lon="-71.06">
+        <h3 class="place-name">Boston</h3>
+        <ul class="place-media">
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=KWWlFXTKTdw" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/KWWlFXTKTdw/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">Reuniting with all of my friends in Boston!</h3>
+            <p class="reel-when mono">Jun 19, 2026 · Boston</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=RHHK4rMCw3A" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/RHHK4rMCw3A/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">life in america 🇺🇸 umass amherst dining hall, fenway, car incident, &amp; more</h3>
+            <p class="reel-when mono">Jul 10, 2026 · Massachusetts</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=8IEeTH36jbw" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/8IEeTH36jbw/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">Making the Most of My Last Days Before University</h3>
+            <p class="reel-when mono">Jun 28, 2026</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=O41Cu7dW2po" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/O41Cu7dW2po/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">My friend did NOT make it through the night...</h3>
+            <p class="reel-when mono">Aug 10, 2026</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=MrP6YWVoFFE" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/MrP6YWVoFFE/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">First week back home after studying abroad...</h3>
+            <p class="reel-when mono">Jun 15, 2026 · Massachusetts</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=nN7LcE9YkXw" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/nN7LcE9YkXw/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">going to my first ever trip to the mountains! 🏔️</h3>
+            <p class="reel-when mono">Jun 21, 2026 · Thornton, NH</p>
+          </li>
+        </ul>
+      </li>
+      <li class="place" data-lat="34.68" data-lon="-82.84">
+        <h3 class="place-name">Clemson, SC</h3>
+        <ul class="place-media">
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=d-yabYQ1DlU" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/d-yabYQ1DlU/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">Trip Vlog ✈️ south carolina w/ my friends | clemson uni, secret santa, &amp; more!</h3>
+            <p class="reel-when mono">Aug 28, 2026 · Clemson, SC</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=i70SC0lMAQ4" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/i70SC0lMAQ4/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">Using DJI Action 5 Pro &amp; Insta360 Ace Pro 2 to vlog in South Carolina</h3>
+            <p class="reel-when mono">Aug 30, 2026 · South Carolina</p>
+          </li>
+        </ul>
+      </li>
+      <li class="place" data-lat="29.76" data-lon="-95.37">
+        <h3 class="place-name">Houston, TX</h3>
+        <ul class="place-media">
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=Km63-wTDMJc" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/Km63-wTDMJc/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">shooting range in Texas 🇺🇸 reunion, ultimate jenga, &amp; famous restaurants!</h3>
+            <p class="reel-when mono">Jul 15, 2026 · Houston, TX</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=AEY292PFZ9A" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/AEY292PFZ9A/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">trying the BEST INDIAN restaurant in texas | part 2</h3>
+            <p class="reel-when mono">Jul 18, 2026 · Houston, TX</p>
+          </li>
+        </ul>
+      </li>
+      <li class="place" data-lat="10.36" data-lon="106.36">
+        <h3 class="place-name">Mỹ Tho, Vietnam</h3>
+        <ul class="place-media">
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=7sBKSTpOy4I" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/7sBKSTpOy4I/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">Going back to my hometown in Vietnam for a week... 🇻🇳</h3>
+            <p class="reel-when mono">Jun 13, 2026 · Vietnam</p>
+          </li>
+        </ul>
+      </li>
+      <li class="place" data-lat="37.57" data-lon="126.98">
+        <h3 class="place-name">Seoul</h3>
+        <ul class="place-media">
+          <li>
+            <img src="images/places/seoul/DSC01447.jpg" alt="Cherry blossoms at night" width="900" height="1200" loading="lazy" />
+            <h3 class="reel-title">Cherry blossoms at night</h3>
+            <p class="reel-when mono">Apr 7, 2025 · Seoul</p>
+          </li>
+          <li>
+            <img src="images/places/seoul/CHERRY.jpg" alt="Cherry blossom" width="960" height="1200" loading="lazy" />
+            <h3 class="reel-title">Cherry blossom</h3>
+            <p class="reel-when mono">Seoul</p>
+          </li>
+          <li>
+            <img src="images/places/gangneung/TRIP.jpg" alt="Trip to Gangneung" width="900" height="1200" loading="lazy" />
+            <h3 class="reel-title">Trip to Gangneung</h3>
+            <p class="reel-when mono">Gangneung, South Korea</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=WGBGAz-tJzE" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/WGBGAz-tJzE/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">The last 3 days of studying abroad in South Korea spring 2025</h3>
+            <p class="reel-when mono">May 18, 2026 · South Korea</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=HbRDkY7toI0" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/HbRDkY7toI0/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">There's only 3 days left before we leave South Korea! 🇰🇷</h3>
+            <p class="reel-when mono">May 10, 2026 · South Korea</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=wv0Ya_H-gFU" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/wv0Ya_H-gFU/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">the hardest part about studying abroad.</h3>
+            <p class="reel-when mono">May 10, 2026</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=VK0QRsWYsJI" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/VK0QRsWYsJI/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">The Final Showdown for Korea University's International Students</h3>
+            <p class="reel-when mono">May 8, 2026 · Seoul</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=WvmhSnLfiaE" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/WvmhSnLfiaE/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">Every Cheers and Drink Taps from the Last 4 Months</h3>
+            <p class="reel-when mono">May 7, 2026 · South Korea</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=UuwQi7xA7-k" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/UuwQi7xA7-k/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">What Clubbing in Korea Really Looks Like. [Hao's POV]</h3>
+            <p class="reel-when mono">May 4, 2026 · South Korea</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=E-mQuZkKbO0" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/E-mQuZkKbO0/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">Hao's DITL in Korea | final exam szn, learning calculus, &amp; liz's birthday!</h3>
+            <p class="reel-when mono">Apr 26, 2026 · South Korea</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=2CvKccMmL4A" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/2CvKccMmL4A/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">Bryan's DITL in Korea | breakfast, ring shopping, &amp; more! [chinese ver.]</h3>
+            <p class="reel-when mono">Apr 24, 2026 · South Korea</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=K96o-76VnLo" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/K96o-76VnLo/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">Insiya's DITL in Korea | matcha, cat cafe, shopping, &amp; friends</h3>
+            <p class="reel-when mono">Apr 24, 2026 · South Korea</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=chhUs7K0kWU" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/chhUs7K0kWU/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">the night before finals at Korea University...</h3>
+            <p class="reel-when mono">Apr 19, 2026 · Seoul</p>
+          </li>
+        </ul>
+      </li>
+      <li class="place" data-lat="33.50" data-lon="126.53">
+        <h3 class="place-name">Jeju</h3>
+        <ul class="place-media">
+          <li>
+            <img src="images/places/jeju/DSC00354.jpg" alt="Jeju coast at dusk" width="1200" height="675" loading="lazy" />
+            <h3 class="reel-title">Jeju coast at dusk</h3>
+            <p class="reel-when mono">Jun 9, 2025 · Jeju, South Korea</p>
+          </li>
+          <li>
+            <img src="images/places/jeju/JEJU.jpg" alt="Jeju Island" width="960" height="1200" loading="lazy" />
+            <h3 class="reel-title">Jeju Island</h3>
+            <p class="reel-when mono">Jeju, South Korea</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=49sC7HdDQOE" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/49sC7HdDQOE/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">The BEST 2 Day Jeju itinerary you'll ever need 🇰🇷</h3>
+            <p class="reel-when mono">Apr 17, 2026 · Jeju</p>
+          </li>
+        </ul>
+      </li>
+      <li class="place" data-lat="34.69" data-lon="135.50">
+        <h3 class="place-name">Osaka</h3>
+        <ul class="place-media">
+          <li>
+            <img src="images/places/osaka/DSC00578.jpg" alt="Dotonbori at night" width="1200" height="800" loading="lazy" />
+            <h3 class="reel-title">Dotonbori at night</h3>
+            <p class="reel-when mono">Jun 28, 2025 · Osaka</p>
+          </li>
+          <li>
+            <img src="images/places/kyoto/DSC00627.jpg" alt="Kyoto from the temple terrace" width="1200" height="800" loading="lazy" />
+            <h3 class="reel-title">Kyoto from the temple terrace</h3>
+            <p class="reel-when mono">Jul 1, 2025 · Kyoto</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=75qz000qqRM" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/75qz000qqRM/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">My first time in Japan 🇯🇵 sushiro, osaka castle, dotonbori, &amp; round 1</h3>
+            <p class="reel-when mono">May 22, 2026 · Osaka</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=_z2TglgmZYM" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/_z2TglgmZYM/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">Spend a day with us at Osaka Expo 🇯🇵 [Japan Vlog]</h3>
+            <p class="reel-when mono">May 24, 2026 · Osaka</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=UdFOj7p3zQo" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/UdFOj7p3zQo/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">Our trip to Kyoto, Japan for only 3 days! 🇯🇵</h3>
+            <p class="reel-when mono">Jun 5, 2026 · Kyoto</p>
+          </li>
+        </ul>
+      </li>
+      <li class="place" data-lat="35.68" data-lon="139.69">
+        <h3 class="place-name">Tokyo</h3>
+        <ul class="place-media">
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=p2HqlSdWigQ" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/p2HqlSdWigQ/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">Tokyo Travel Vlog 🇯🇵🎋teamlabs, shibuya, &amp; clubbing!</h3>
+            <p class="reel-when mono">Jun 7, 2026 · Tokyo</p>
+          </li>
+          <li>
+            <a class="clip" href="https://www.youtube.com/watch?v=cBwflE8BXCk" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/cBwflE8BXCk/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" /></a>
+            <h3 class="reel-title">Going to Kamakura, Japan for the first time! 🇯🇵</h3>
+            <p class="reel-when mono">Jun 11, 2026 · Kamakura</p>
+          </li>
+        </ul>
+      </li>
+      </ol>
+    </div>
+  </section>
+  <!-- ============================================================
+       ABOUT
+       The bio over the editor's timeline: site.js lays the photos in the
+       timeline-clips list out as clips on one track, oldest first, with a
+       playhead that scrubs as the section scrolls; the clip under it fills
+       the screen behind, blurred. Hao's cut-out fades into the track.
+       EDIT ME: the statement, the paragraph, the gear line, and
+       images/hao.png — a cut-out on a transparent background, head and
+       shoulders at least. The Résumé button opens resume/hao-bui.pdf in a
+       pop-up; replace that file to update it. The clips are the <li>s in
+       timeline-clips, same shape as a TRAVEL item; ten keeps the track
+       readable.
+       ============================================================ -->
+  <section id="about" class="screen screen--band">
+    <div class="screen-inner">
+      <h2 class="screen-title" data-reveal>About</h2>
+      <div class="about" data-reveal>
+        <p class="about-statement">
+          A camera in my bag, a country I hadn't been to yet, and a story I
+          found once I got back to the timeline.
+        </p>
+        <div class="about-text">
+          <p class="lede">
+            I'm Hao, a filmmaker and photographer in Boston. That instinct —
+            finding the shape of something in the edit — is what I bring to
+            client work too. I shoot and cut promos, event coverage, and social
+            content for brands and small businesses. One person, start to
+            finish: I plan it, shoot it, edit it, color it, and deliver it.
+            Based in Boston, happy to travel — if you've got something in
+            mind, let's talk.
+          </p>
+          <p class="about-gear mono">Sony a7C II · DJI Action 5 Pro · DJI Action 6 Pro</p>
+          <p class="about-actions">
+            <a class="btn" href="resume/hao-bui.pdf" data-resume-open>Résumé</a>
+            <a class="btn" href="https://www.instagram.com/directedbyhao/" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a class="btn" href="https://www.youtube.com/@haoismylife" target="_blank" rel="noopener noreferrer">YouTube</a>
+            <a class="btn" href="https://www.linkedin.com/in/hao-bui-7468a1246/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a class="btn" href="mailto:haocinema@gmail.com">Email</a>
+          </p>
+        </div>
+        <div class="about-figure">
+          <img class="about-photo" src="images/hao.png" alt="Hao Bui holding a camera" width="431" height="520" />
+        </div>
+        <div class="timeline">
+          <ul class="timeline-clips" hidden>
+  
+            <li>
+              <img src="images/travel/IMG_0035.jpg" alt="Wishes on the fence" width="900" height="1200" loading="lazy" />
+              <h3 class="reel-title">Wishes on the fence</h3>
+              <p class="reel-when mono">Mar 19, 2023</p>
+            </li>
+  
+            <li>
+              <img src="images/travel/DSC03453.jpg" alt="Lantern garden at night" width="675" height="1200" loading="lazy" />
+              <h3 class="reel-title">Lantern garden at night</h3>
+              <p class="reel-when mono">Nov 2, 2024</p>
+            </li>
+  
+            <li>
+              <img src="images/travel/DSC00883.jpg" alt="Windmill by the sea" width="1200" height="800" loading="lazy" />
+              <h3 class="reel-title">Windmill by the sea</h3>
+              <p class="reel-when mono">Mar 21, 2025</p>
+            </li>
+  
+            <li>
+              <img src="images/travel/DSC01015.jpg" alt="Fishing off the rocks" width="800" height="1200" loading="lazy" />
+              <h3 class="reel-title">Fishing off the rocks</h3>
+              <p class="reel-when mono">Mar 22, 2025</p>
+            </li>
+  
+            <li>
+              <img src="images/travel/DSC00987.jpg" alt="Red bridge over the rocks" width="800" height="1200" loading="lazy" />
+              <h3 class="reel-title">Red bridge over the rocks</h3>
+              <p class="reel-when mono">Mar 22, 2025</p>
+            </li>
+  
+            <li>
+              <img src="images/places/seoul/DSC01447.jpg" alt="Cherry blossoms at night" width="900" height="1200" loading="lazy" />
+              <h3 class="reel-title">Cherry blossoms at night</h3>
+              <p class="reel-when mono">Apr 7, 2025 · Seoul</p>
+            </li>
+  
+            <li>
+              <img src="images/travel/DSC03189.jpg" alt="Sunset over the sandbar" width="1200" height="675" loading="lazy" />
+              <h3 class="reel-title">Sunset over the sandbar</h3>
+              <p class="reel-when mono">May 17, 2025</p>
+            </li>
+  
+            <li>
+              <img src="images/places/jeju/DSC00354.jpg" alt="Jeju coast at dusk" width="1200" height="675" loading="lazy" />
+              <h3 class="reel-title">Jeju coast at dusk</h3>
+              <p class="reel-when mono">Jun 9, 2025 · Jeju, South Korea</p>
+            </li>
+  
+            <li>
+              <img src="images/places/osaka/DSC00578.jpg" alt="Dotonbori at night" width="1200" height="800" loading="lazy" />
+              <h3 class="reel-title">Dotonbori at night</h3>
+              <p class="reel-when mono">Jun 28, 2025 · Osaka</p>
+            </li>
+  
+            <li>
+              <img src="images/places/kyoto/DSC00627.jpg" alt="Kyoto from the temple terrace" width="1200" height="800" loading="lazy" />
+              <h3 class="reel-title">Kyoto from the temple terrace</h3>
+              <p class="reel-when mono">Jul 1, 2025 · Kyoto</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONTACT — also the footer. Mirrors the hero with its first photo
+       held still; site.js copies the photo over at load.
+       EDIT ME: the two lines and the headline.
+       ============================================================ -->
+  <footer id="contact" class="footer">
+    <div class="footer-slides" aria-hidden="true"></div>
+    <div class="headline headline--footer">
+      <h2 class="headline-text" data-reveal>Get in touch</h2>
+    </div>
+    <button class="btn btn-solid" type="button" data-contact-open>Send a message</button>
+    <a class="to-top" href="#top" aria-label="Back to top">↑</a>
+    <p class="footer-copy">© <span class="year"></span> Hao Bui · directedbyhao.com · Site by <a href="https://github.com/yalongwastaken" target="_blank" rel="noopener noreferrer">Anthony Yalong</a></p>
+  </footer>
+
+  <!-- ============================================================
+       CONTACT MODAL
+       Pops up in the center of the screen when someone clicks
+       "Contact" (in the nav, or the button in the Contact section).
+       The behaviour lives in site.js.
+       ============================================================ -->
+  <div class="modal" id="contact-modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+
+    <div class="modal-box"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="contact-modal-title">
+
+      <button class="modal-close" type="button" data-close aria-label="Close contact form">&times;</button>
+
+      <div id="contact-modal-head">
+        <p class="modal-kicker">Get in touch</p>
+        <h2 class="modal-title" id="contact-modal-title">Let's film something.</h2>
+        <p class="modal-sub">
+          Tell me what you've got in mind — I read every message.
+        </p>
+      </div>
+
+      <form class="contact-form" id="contact-form" novalidate>
+
+        <div class="field">
+          <label for="cf-name">Name</label>
+          <input id="cf-name" name="name" type="text" autocomplete="name" placeholder="Your name" required />
+          <p class="field-error" id="cf-name-error"></p>
+        </div>
+
+        <div class="field">
+          <label for="cf-email">Email</label>
+          <input id="cf-email" name="email" type="email" autocomplete="email" placeholder="you@email.com" required />
+          <p class="field-error" id="cf-email-error"></p>
+        </div>
+
+        <!-- EDIT ME: change these options to the kinds of work you take on -->
+        <div class="field">
+          <label for="cf-topic">What's it for?</label>
+          <select id="cf-topic" name="topic">
+            <option>Concert or event</option>
+            <option>Trip or travel</option>
+            <option>Brand or promo</option>
+            <option>Personal / everyday</option>
+            <option>Something else</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="cf-message">Message</label>
+          <textarea id="cf-message" name="message" rows="4"
+                    placeholder="When, where, and what you're picturing…" required></textarea>
+          <p class="field-error" id="cf-message-error"></p>
+        </div>
+
+        <!-- Spam trap: hidden from people, Formspree drops anything that fills it. -->
+        <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+        <p class="form-error" id="cf-error" role="alert"></p>
+
+        <button class="btn btn-solid" type="submit" id="cf-submit">Send message</button>
+
+        <p class="form-note">
+          Prefer email? <a href="mailto:haocinema@gmail.com">haocinema@gmail.com</a>
+        </p>
+      </form>
+
+      <div class="form-success" id="contact-success" hidden>
+        <div class="success-mark" aria-hidden="true">✓</div>
+        <h3 id="contact-success-title">Message sent.</h3>
+        <p>Thanks for reaching out — I'll get back to you soon.</p>
+        <button class="btn" type="button" data-close>Close</button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       PLACE VIEWER
+       Fills the screen when a map pin is clicked, with that place's photos
+       and clips in the same reel as Films and Travel. Closed by the ×,
+       Esc, or a click on the empty backdrop. site.js owns it.
+       ============================================================ -->
+  <div class="viewer" id="place-viewer" hidden>
+    <div class="viewer-box" role="dialog" aria-modal="true" aria-labelledby="viewer-name">
+      <div class="viewer-head">
+        <h3 class="viewer-name" id="viewer-name"></h3>
+        <button class="viewer-close" type="button" aria-label="Close">&times;</button>
+      </div>
+      <div class="reel viewer-reel"><ul class="reel-items"></ul></div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       RÉSUMÉ POP-UP
+       Opened by the Résumé button in About; without scripts that button
+       opens the PDF itself. Closed by the ×, Esc, or the backdrop.
+       ============================================================ -->
+  <div class="viewer" id="resume-viewer" hidden>
+    <div class="viewer-box" role="dialog" aria-modal="true" aria-labelledby="resume-name">
+      <div class="viewer-head">
+        <h3 class="viewer-name" id="resume-name">Résumé</h3>
+        <span class="viewer-actions">
+          <a class="btn viewer-download" href="resume/hao-bui.pdf" download>Download PDF</a>
+          <button class="viewer-close" type="button" aria-label="Close">&times;</button>
+        </span>
+      </div>
+      <object class="resume-embed" data="resume/hao-bui.pdf" type="application/pdf" aria-label="Hao Bui résumé">
+        <p class="resume-fallback">This browser can't show the PDF here —
+          <a href="resume/hao-bui.pdf">open it directly</a>.</p>
+      </object>
+    </div>
+  </div>
+
+  <script src="site.js"></script>
+
+</body>
+</html>

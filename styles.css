@@ -1,0 +1,1082 @@
+/* ============================================================
+   directedbyhao.com — stylesheet
+   Plain CSS, no build step. Start with the variables in :root.
+
+   One page, six screens. Grounds run photo · band · band · ink · paper ·
+   photo, and every screen has one large title. The accent is used only
+   for small things: dates, pins, focus rings.
+   ============================================================ */
+
+:root {
+  --paper:      #f6f4f0;
+  --ink:        #14130f;
+  --accent:     #8ab4f8;
+
+  --surface:    #ffffff;   /* panels, modal box */
+  --muted:      #6b6760;   /* secondary text on paper */
+  --line:       rgba(20, 19, 15, 0.14);
+
+  --maxw:       1120px;
+  --gutter:     24px;
+  --bar-h:      64px;      /* the header bar */
+
+  --display:    "Fraunces", Georgia, "Times New Roman", serif;
+  --font:       "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mono:       "DM Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+/* ---- Base ---- */
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+img { display: block; max-width: 100%; }
+
+.mono { font-family: var(--mono); font-weight: 400; letter-spacing: 0; }
+
+/* ---- Buttons ---- */
+.btn {
+  display: inline-block;
+  background: transparent;
+  padding: 12px 24px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.btn:hover { text-decoration: none; opacity: 0.75; }
+.btn-solid { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.btn-solid:disabled { opacity: 0.45; cursor: default; }
+
+/* ============================================================
+   CURTAIN — exists when scripts run; site.js lifts it once fonts are in.
+   ============================================================ */
+.curtain { display: none; }
+html.js .curtain {
+  display: block;
+  position: fixed;
+  inset: 0;
+  background: var(--ink);
+  z-index: 200;
+  transition: opacity 0.4s ease;
+}
+.curtain.is-lifted { opacity: 0; pointer-events: none; }
+
+/* ============================================================
+   HEADER BAR — solid ink at the top of the page; once the visitor scrolls,
+   site.js adds .is-scrolled and it turns translucent. The tab for the
+   section on screen carries aria-current.
+   ============================================================ */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--bar-h);
+  padding: 0 var(--gutter);
+  background: var(--ink);
+  color: var(--paper);
+  transition: background 0.3s ease;
+}
+.site-header.is-scrolled {
+  background: rgba(20, 19, 15, 0.72);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+.site-header .brand { font-size: 0.9rem; font-weight: 500; }
+.tabs { display: flex; align-items: center; font-size: 0.9rem; font-weight: 500; }
+.tabs a { padding: 0 14px; color: rgba(246, 244, 240, 0.7); }
+.tabs a:last-child { padding-right: 0; }
+.tabs a + a { border-left: 1px solid currentColor; }
+.tabs a:hover { color: var(--paper); text-decoration: none; }
+.tabs a[aria-current] {
+  color: var(--paper);
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+/* ============================================================
+   PHOTO LAYERS — the hero and the footer each carry a set of
+   <img class="slide">. The active one is in place; a leaving one
+   has moved off to the left. site.js swaps the classes and, after the
+   move, parks the old frame back on the right.
+   ============================================================ */
+.hero-slides,
+.footer-slides { position: absolute; inset: 0; z-index: 0; }
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.82);
+  transform: translateX(100%);
+  transition: transform 0.9s cubic-bezier(0.77, 0, 0.18, 1);
+}
+.slide.is-active  { transform: translateX(0); }
+.slide.is-leaving { transform: translateX(-100%); }
+
+/* ============================================================
+   HERO and FOOTER — the photo, white type with a soft shadow over it.
+   ============================================================ */
+/* The bar is always above them, so both give up that height to keep
+   bar + photo to one screen. */
+.hero,
+.footer {
+  position: relative;
+  overflow: hidden;
+  min-height: calc(100vh - var(--bar-h));
+  height: calc(100dvh - var(--bar-h));
+  scroll-margin-top: var(--bar-h);
+  background: var(--ink);
+  color: #fff;
+}
+
+.headline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  padding: 0 var(--gutter);
+  overflow: hidden;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 2px 28px rgba(0, 0, 0, 0.45), 0 0 2px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+.headline-text {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(4rem, 13vw, 12rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+}
+.headline-sub {
+  max-width: 60ch;
+  margin: 22px auto 0;
+  font-size: clamp(1.1rem, 1.9vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.35;
+}
+.headline--footer .headline-text { font-size: clamp(2.4rem, 11vw, 10rem); }
+
+.hero-socials, .hero-role,
+.to-top, .footer-copy { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.5); }
+
+.hero-socials {
+  position: absolute;
+  left: var(--gutter);
+  bottom: 28px;
+  z-index: 2;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+.hero-socials li + li { margin-top: 8px; }
+.hero-role {
+  position: absolute;
+  right: var(--gutter);
+  bottom: 24px;
+  z-index: 2;
+  margin: 0;
+  text-align: right;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(1.4rem, 3vw, 2.4rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+/* Socials, role and the line under the name stay hidden through the
+   curtain and the font flicker, then stagger in once the hero is live. */
+.hero-socials, .hero-role, .headline-sub {
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.hero-socials { transition-delay: 0.15s; }
+.hero-role    { transition-delay: 0.3s; }
+html.js .hero:not(.is-live) .hero-socials,
+html.js .hero:not(.is-live) .hero-role,
+html.js .hero:not(.is-live) .headline-sub { opacity: 0; transform: translateY(8px); }
+
+/* ============================================================
+   SCREENS — every section between the hero and the footer
+   ============================================================ */
+.screen {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - var(--bar-h));
+  min-height: calc(100dvh - var(--bar-h));
+  scroll-margin-top: var(--bar-h);
+  /* clip, not hidden: hidden would make the section the scroll container
+     for the sticky label below and un-stick it */
+  overflow: clip;
+}
+.screen-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 48px var(--gutter) 72px;   /* every section's title sits 48px under the bar */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.screen--paper { background: var(--paper); color: var(--ink); }
+.screen--ink {
+  background: var(--ink);
+  color: var(--paper);
+  --muted: rgba(246, 244, 240, 0.6);
+  --line: rgba(246, 244, 240, 0.14);
+  --surface: #1c1b16;
+}
+/* A band screen has a photo behind it (the reel's backdrop), so its type
+   is white with a shadow. */
+.screen--band {
+  background: var(--ink);
+  color: #fff;
+  --muted: rgba(255, 255, 255, 0.72);
+  --line: rgba(255, 255, 255, 0.2);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.5);
+}
+.screen--band .screen-inner { padding-bottom: 40px; }
+/* Reel items are this tall; the band leaves room for the title above and
+   the caption below so the section stays one screen. */
+.screen--band { --reel-h: clamp(300px, calc(100vh - 444px), 600px); }
+
+.screen-title {
+  margin: 0 0 10px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(2.8rem, 7vw, 6rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+/* Content blocks fade and lift into place the first time they arrive.
+   Titles arrive differently: they start a touch wide-tracked and settle
+   into their final spacing — type setting itself, not flickering. */
+html.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease, letter-spacing 1s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+html.js [data-reveal].is-in { opacity: 1; transform: none; }
+html.js .screen-title[data-reveal],
+html.js .headline-text[data-reveal] { transform: none; letter-spacing: 0.08em; }
+html.js .screen-title[data-reveal].is-in { letter-spacing: -0.04em; }
+html.js .headline-text[data-reveal].is-in { letter-spacing: -0.04em; }
+
+/* ---- Films and Travel: the reel ----
+   .reel-items is the data: one <li> per item holding an <a class="clip">
+   or an <img>, then its .reel-title, .reel-when and optional .reel-line.
+   site.js builds the strip, caption and backdrop in front of the list and
+   hides it; without scripts the list is a grid of tiles with their text. */
+.reel {
+  flex: 1;                     /* the strip and caption centre in what the title leaves */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.reel.is-live .reel-items { display: none; }
+.reel-items {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 24px 16px;
+}
+.reel-items a { display: block; }
+.reel-items img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 3px; }
+.reel-items .reel-title, .place-media .reel-title { margin-top: 10px; font-size: 1rem; }
+.reel-title {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.35rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+.reel-when {
+  margin: 6px 0 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.reel-line { margin: 8px 0 0; font-size: 0.95rem; color: var(--muted); }
+.reel-all { font-size: 0.9rem; color: var(--muted); }
+
+/* The current picture fills the screen behind a reel or the About
+   timeline, blurred and dimmed. Two layers take turns so one fades in as
+   the other fades out. */
+.backdrop { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+.backdrop img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(28px) brightness(0.4);
+  transform: scale(1.12);      /* keeps the blur's soft edge outside the section */
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.backdrop img.is-in { opacity: 1; }
+
+/* The strip is as wide as its items and starts at the stage's centre;
+   site.js moves it left so the current item sits under that centre.
+   Items take the strip's height and their own width, so nothing is
+   letterboxed; the section clips whatever peeks past its edges. */
+.reel-stage { position: relative; }
+.reel-strip {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 72px;                   /* room for an arrow between neighbours */
+  width: max-content;
+  margin-left: 50%;
+  transition: transform 0.6s cubic-bezier(0.77, 0, 0.18, 1);
+}
+.reel-item {
+  flex: none;
+  height: var(--reel-h);
+  opacity: 0.35;
+  transform: scale(0.92);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  cursor: pointer;
+}
+.reel-item.is-active { opacity: 1; transform: none; cursor: auto; }
+.reel-item .clip { position: relative; display: block; height: 100%; }
+.reel-item img {
+  display: block;
+  height: 100%;
+  width: auto;
+  max-width: calc(100vw - 2 * var(--gutter));   /* a wide film on a narrow phone */
+  object-fit: contain;
+  border-radius: 3px;
+}
+
+/* The arrows flank the current item, in the gaps. --edge is half its
+   width, measured by site.js; they glide with the strip as it changes. */
+.reel-arrow {
+  position: absolute;
+  top: 50%;
+  width: 36px;
+  height: 36px;
+  padding: 0 0 3px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: left 0.6s cubic-bezier(0.77, 0, 0.18, 1), right 0.6s cubic-bezier(0.77, 0, 0.18, 1), background 0.15s;
+}
+.reel-arrow:hover { background: var(--line); }
+.reel-prev { right: calc(50% + var(--edge) + 18px); }
+.reel-next { left: calc(50% + var(--edge) + 18px); }
+
+/* Under the strip: the item's text on the left, the count and the
+   "All …" link on the right. */
+.reel-caption {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px 32px;
+  align-items: start;
+  width: min(100%, 760px);
+  margin: 22px auto 0;
+  min-height: 84px;
+}
+.reel-side { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; padding-top: 6px; }
+.reel-count { font-size: 0.8rem; color: var(--muted); }
+
+/* A play mark over the current clip, so a video reads as one. */
+.reel-item.is-active .clip::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 52px;
+  height: 52px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: rgba(246, 244, 240, 0.92) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M9 6l9 6-9 6z' fill='%2314130f'/></svg>") center / 26px no-repeat;
+}
+
+/* ---- About: the map is the screen ----
+   The map keeps its natural proportions and is centred; the pins layer
+   sits exactly over the image, so a pin at 32% is at 32% of the image.
+   The title and its hint sit top left, in the shared title position; the
+   map sits at the bottom so they never cover it. A clicked pin opens the
+   viewer. */
+.screen--map { justify-content: center; }
+.screen--map .atlas {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;             /* the no-script places list goes under the map */
+  align-items: flex-end;
+  padding-bottom: 16px;
+  min-height: calc(100vh - var(--bar-h));
+  min-height: calc(100dvh - var(--bar-h));
+}
+.screen--map .atlas-map {
+  width: 100%;
+  transition: transform 0.6s ease-out;   /* the gentle drift with the pointer */
+}
+.atlas-head {
+  position: absolute;
+  z-index: 4;
+  left: max(var(--gutter), calc(50% - var(--maxw) / 2 + var(--gutter)));   /* the content column's edge */
+  top: 48px;
+}
+.atlas-head .screen-title { margin: 0; }
+
+.lede { font-size: 1.05rem; margin: 0 0 22px; }
+.facts { margin: 0; }
+.facts > div {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 16px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+.facts dt {
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 2px;
+}
+.facts dd { margin: 0; font-size: 0.95rem; }
+
+.atlas-hint { margin: 10px 0 0; font-size: 0.78rem; color: var(--accent); }
+html:not(.js) .atlas-hint { display: none; }
+/* The map scrolls sideways when its canvas is wider than it (phones). */
+.atlas-map { position: relative; background: var(--ink); overflow-x: auto; scrollbar-width: none; }
+.atlas-map::-webkit-scrollbar { display: none; }
+/* Sized by the height left under the title block (240px) so the map
+   always starts the same distance below it, whatever the screen; the 2.29
+   is the image's width over its height (2400 / 1048). */
+.atlas-canvas {
+  position: relative;
+  width: min(100%, calc((100dvh - var(--bar-h) - 240px) * 2.29));
+  margin: 0 auto;
+}
+.atlas-world { width: 100%; height: auto; display: block; }
+.atlas-pins { position: absolute; inset: 0; }
+
+/* A pin is a button placed by site.js at a percentage of the map. Pins
+   pop in one after another the first time the map arrives, then hold. */
+.pin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  padding: 15px;               /* a 44px target around a 14px dot */
+  border: 0;
+  background: none;
+  color: var(--paper);
+  font: inherit;
+  cursor: pointer;
+}
+.atlas:not(.is-in) .pin { opacity: 0; }
+.atlas.is-in .pin {
+  animation: pin-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(300ms + var(--i) * 70ms);
+}
+@keyframes pin-in {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.4); }
+  to   { opacity: 1; transform: translate(-50%, -50%); }
+}
+.pin:hover, .pin.is-active { z-index: 2; }
+.pin.is-near { z-index: 3; }
+.pin-dot {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--ink);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.pin:hover .pin-dot,
+.pin:focus-visible .pin-dot,
+.pin.is-active .pin-dot { transform: scale(1.3); box-shadow: 0 0 0 3px var(--ink), 0 0 0 5px var(--accent); }
+.pin:focus-visible { outline: none; }
+/* The label is display only; site.js picks the side (data-side) that
+   does not cover another pin or label. */
+.pin-name {
+  position: absolute;
+  white-space: nowrap;
+  pointer-events: none;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: rgba(246, 244, 240, 0.85);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
+}
+.pin:hover .pin-name, .pin.is-active .pin-name { color: #fff; }
+.pin-name[data-side="top"]    { left: 50%; bottom: calc(50% + 12px); transform: translateX(-50%); }
+.pin-name[data-side="bottom"] { left: 50%; top: calc(50% + 12px); transform: translateX(-50%); }
+.pin-name[data-side="right"]  { left: calc(50% + 14px); top: 50%; transform: translateY(-50%); }
+.pin-name[data-side="left"]   { right: calc(50% + 14px); top: 50%; transform: translateY(-50%); }
+.pin-name[data-side="top-right"]    { left: calc(50% + 10px); bottom: calc(50% + 8px); }
+.pin-name[data-side="top-left"]     { right: calc(50% + 10px); bottom: calc(50% + 8px); }
+.pin-name[data-side="bottom-right"] { left: calc(50% + 10px); top: calc(50% + 8px); }
+.pin-name[data-side="bottom-left"]  { right: calc(50% + 10px); top: calc(50% + 8px); }
+
+/* The list is the data. With scripts it hides behind the pins;
+   without, it is the section's "Places". */
+.places { list-style: none; width: 100%; margin: 0; padding: 24px var(--gutter) 40px; }
+.atlas.is-live .places { display: none; }
+.place + .place { margin-top: 28px; }
+.place-name {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  margin: 0 0 10px;
+}
+.place-media {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+}
+.place-media img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 3px; background: #e6e2db; }
+
+/* ---- About: the bio over the editor's timeline. Statement and paragraph
+   stack on the left; Hao's head and shoulders fill the right, standing on
+   the track and fading into it; the timeline runs the full width
+   underneath. site.js fills .timeline from the Travel list and drives the
+   playhead from scroll. When the section arrives the copy lands line by
+   line, Hao rises into frame and the clips slide in from the right. ---- */
+.about {
+  --timeline-h: clamp(104px, 16vh, 150px);
+  --figure-h: calc(100vh - var(--bar-h) - var(--timeline-h) - 110px);   /* 110px: the screen's paddings and the gap above the track */
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) calc(var(--figure-h) * 431 / 520);   /* hao.png's aspect: the column is exactly the figure */
+  grid-template-rows: auto 1fr auto;
+  column-gap: 20px;
+}
+.about-statement { grid-area: 1 / 1; }
+.about-text { grid-area: 2 / 1; }
+.about-figure { grid-area: 1 / 2 / 3 / 3; }
+.timeline { grid-area: 3 / 1 / 4 / 3; }
+.about-statement {
+  margin: 0;
+  padding-top: 6px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(1.5rem, min(2.3vw, 3.4vh), 2.1rem);   /* also shrinks on short windows so the screen holds */
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+.about-text { padding-top: 12px; }
+.about-text .lede { margin: 0; font-size: 0.98rem; line-height: 1.55; }
+.about-gear { margin: 10px 0 0; font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.about-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; }
+.about-actions .btn { padding: 9px 14px; font-size: 0.82rem; }
+/* The photo is anchored to the bottom of its cell so it stands on the
+   track; being out of flow, its height can never push the timeline off
+   the screen. */
+.about-figure { position: relative; pointer-events: none; }
+.about-photo {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: var(--figure-h);
+  width: auto;
+  -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 97%);
+  mask-image: linear-gradient(to bottom, #000 60%, transparent 97%);
+}
+
+/* The timeline: a ruler of months, one track of clips, a playhead with the
+   current clip's name above it. Clip widths come from site.js. */
+.timeline { position: relative; height: var(--timeline-h); margin-top: 22px; padding-top: 22px; }
+.timeline-ruler { position: absolute; left: 0; right: 0; top: 0; height: 22px; border-bottom: 1px solid var(--line); }
+.timeline-tick.is-crowded { color: transparent; }   /* site.js hides a month that would overlap the one before */
+.timeline-tick {
+  position: absolute;
+  top: 0;
+  height: 22px;
+  padding-left: 6px;
+  border-left: 1px solid var(--line);
+  font: 400 0.66rem/22px var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.timeline-track { display: flex; gap: 3px; height: 100%; }
+.timeline-cut {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  overflow: hidden;
+  background: #000;
+  cursor: pointer;
+  opacity: 0.45;
+  transition: opacity 0.3s ease;
+}
+.timeline-cut img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.timeline-name {
+  position: absolute;
+  left: 8px;
+  bottom: 6px;
+  max-width: calc(100% - 16px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+.timeline-cut:hover { opacity: 0.8; }
+.timeline-cut.is-current { opacity: 1; }
+.timeline-cut:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.timeline-head {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--accent);
+  pointer-events: none;
+  transition: left 0.15s linear;
+}
+.timeline-head::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  transform: translateX(-50%);
+  background: var(--accent);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.timeline-now {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  margin: 0;
+  transform: translateX(-50%);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  white-space: nowrap;
+  transition: left 0.15s linear;
+}
+html.js .about-statement,
+html.js .about-text > * { opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
+html.js .about-photo { opacity: 0; transform: translateY(60px); transition: opacity 0.8s ease, transform 1s cubic-bezier(0.2, 0.7, 0.2, 1); }
+html.js .timeline-cut { opacity: 0; transform: translateX(40px); transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1); }
+html.js .about.is-in .about-statement,
+html.js .about.is-in .about-text > * { opacity: 1; transform: none; }
+html.js .about.is-in .about-text > :nth-child(1) { transition-delay: 0.15s; }
+html.js .about.is-in .about-text > :nth-child(2) { transition-delay: 0.25s; }
+html.js .about.is-in .about-text > :nth-child(3) { transition-delay: 0.35s; }
+html.js .about.is-in .about-photo { opacity: 1; transform: none; }
+html.js .about.is-in .timeline-cut { opacity: 0.45; transform: none; transition-delay: calc(0.2s + var(--i) * 60ms); }
+html.js .about.is-in .timeline-cut:hover { opacity: 0.8; transition-delay: 0s; }
+html.js .about.is-in .timeline-cut.is-current { opacity: 1; transition-delay: 0s; }
+
+/* ---- Résumé pop-up: the PDF in the same full-screen viewer ---- */
+.viewer-actions { display: flex; align-items: center; gap: 12px; }
+.viewer-download { color: #fff; text-shadow: none; }
+.resume-embed {
+  width: min(100%, 900px);
+  height: calc(100vh - 120px);
+  margin: 0 auto;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--surface);
+}
+.resume-fallback { padding: 24px; margin: 0; }
+
+/* ============================================================
+   FOOTER = CONTACT. The headline and the one button stack centred; only
+   the arrow and © sit in corners. Email and socials live in About.
+   ============================================================ */
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  scroll-margin-top: var(--bar-h);
+}
+.headline--footer { position: relative; top: auto; transform: none; }
+.footer .btn-solid {
+  position: relative;
+  z-index: 2;
+  margin-top: 28px;
+  background: #fff;
+  border-color: #fff;
+  color: #000;
+}
+.to-top {
+  position: absolute;
+  top: 22px;
+  right: var(--gutter);
+  z-index: 3;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  color: #000;
+  font-size: 1.1rem;
+}
+.to-top:hover { text-decoration: none; opacity: 0.8; }
+.footer-copy {
+  position: absolute;
+  right: var(--gutter);
+  bottom: 24px;
+  z-index: 2;
+  margin: 0;
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
+/* ============================================================
+   PLACE VIEWER — the whole screen, with a clicked pin's photos and clips
+   in the same reel as Films and Travel
+   ============================================================ */
+.viewer[hidden] { display: none; }
+.viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--ink);
+  color: #fff;
+  --muted: rgba(255, 255, 255, 0.72);
+  --line: rgba(255, 255, 255, 0.2);
+  --reel-h: clamp(280px, calc(100vh - 260px), 760px);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.viewer.is-open { opacity: 1; }
+.viewer-box {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 72px var(--gutter) 24px;
+}
+.viewer-head {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px var(--gutter);
+}
+.viewer-name {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+}
+.viewer-close {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: rgba(20, 19, 15, 0.55);
+  color: #fff;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  text-shadow: none;
+}
+.viewer-close:hover { background: var(--line); }
+
+/* ============================================================
+   SMALL SCREENS
+   ============================================================ */
+@media (max-width: 768px) {
+  :root { --gutter: 16px; }
+  .hero-role { font-size: 1.25rem; }
+  .tabs { font-size: 0.84rem; }
+  .tabs a { padding: 0 9px; }
+  /* Too small to tap at screen width: the map is 3 screens wide and pans. */
+  .atlas-canvas { width: 300vw; margin: 0; }
+  /* Stacked: the figure first, in flow, with room below for its drift. */
+  .about { grid-template-columns: 1fr; grid-template-rows: auto; row-gap: 16px; }
+  .about-statement, .about-text, .about-figure, .timeline { grid-area: auto; }
+  .about-figure { display: flex; justify-content: flex-end; margin-bottom: -16px; }
+  .about-photo { position: static; height: 340px; }
+  .timeline { height: 104px; margin-top: 8px; }
+  .timeline-name { display: none; }
+  .reel-caption { grid-template-columns: 1fr; min-height: 0; }
+  .reel-side { flex-direction: row; justify-content: space-between; align-items: center; padding-top: 0; }
+  /* No room beside a full-width item: the arrows sit just inside its edges. */
+  .reel-strip { gap: 16px; }
+  .reel-arrow { border-color: transparent; background: rgba(20, 19, 15, 0.55); color: #fff; }
+  .reel-prev { right: calc(50% + var(--edge) - 44px); }
+  .reel-next { left: calc(50% + var(--edge) - 44px); }
+  .footer-copy { display: none; }
+}
+@media (max-width: 600px) {
+  .facts > div { grid-template-columns: 1fr; gap: 2px; }
+}
+@media (max-width: 420px) {
+  .site-header .brand, .tabs { font-size: 0.78rem; }
+  .tabs a { padding: 0 7px; }
+}
+
+/* ============================================================
+   REDUCED MOTION — every effect becomes its settled state
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .curtain, .slide, .hero-socials, .hero-role, .headline-sub,
+  .viewer, .reel-arrow, .reel-strip, .reel-item, .backdrop img, .timeline-cut, .timeline-head, .timeline-now,
+  html.js [data-reveal], html.js .about-statement, html.js .about-text > *, html.js .about-photo, .pin-dot { transition: none; }
+  html.js .about-statement, html.js .about-text > *, html.js .about-photo { opacity: 1; transform: none; }
+  html.js .timeline-cut { opacity: 0.45; transform: none; }
+  html.js [data-reveal] { opacity: 1; transform: none; letter-spacing: -0.04em; }
+  .atlas.is-in .pin { animation: none; }
+}
+
+/* ============================================================
+   CONTACT MODAL
+   Markup near the bottom of index.html; behaviour in site.js.
+   Paper box on the ink page.
+   ============================================================ */
+
+/* Stops the page behind the modal from scrolling while it's open */
+body.modal-lock { overflow: hidden; }
+
+/* NOTE: .modal sets display:flex, which would beat the browser's built-in
+   [hidden] rule — so hiding has to be spelled out explicitly here. */
+.modal[hidden] { display: none; }
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  color: var(--ink);
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 19, 15, 0.55);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.modal-box {
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 40px 36px 30px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* .is-open is added by the script once the closed state has painted. */
+.modal.is-open .modal-backdrop { opacity: 1; }
+.modal.is-open .modal-box { opacity: 1; transform: translateY(0); }
+
+/* ---- close (×) button ---- */
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  background: none;
+  border: 0;
+  border-radius: 2px;
+  color: var(--muted);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.modal-close:hover { background: rgba(20, 19, 15, 0.06); color: var(--ink); }
+/* Greyed while a send is in flight — the modal refuses to close until it lands. */
+.modal-close:disabled { opacity: 0.3; cursor: default; }
+.modal-close:disabled:hover { background: none; color: var(--muted); }
+
+/* Inputs signal focus with their border, so only buttons and links need a ring. */
+.modal-box button:focus-visible,
+.modal-box a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---- headings inside the box ---- */
+.modal-kicker {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 12px;
+}
+.modal-title {
+  font-family: var(--display);
+  font-size: 1.7rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  margin: 0 0 8px;
+}
+.modal-sub { color: var(--muted); font-size: 0.92rem; margin: 0 0 26px; }
+
+/* ---- form fields ---- */
+.field { margin-bottom: 16px; }
+
+.field label {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 500;
+  color: var(--muted);
+  margin-bottom: 7px;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  width: 100%;
+  padding: 11px 13px;
+  background: #fbfaf8;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.94rem;
+  transition: border-color 0.15s, background 0.15s;
+}
+.contact-form textarea { resize: vertical; min-height: 94px; }
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder { color: #a5a099; }
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: var(--ink);
+  background: #fff;
+}
+
+/* red outline + message when a field is wrong */
+.contact-form [aria-invalid] { border-color: #b23b28; }
+.field-error { margin: 6px 0 0; color: #b23b28; font-size: 0.79rem; }
+.field-error:empty { display: none; }
+
+/* Form-level failure (the send itself), as opposed to a bad field. */
+.form-error {
+  margin: 0 0 14px;
+  padding: 10px 12px;
+  border: 1px solid rgba(178, 59, 40, 0.3);
+  border-radius: 3px;
+  background: rgba(178, 59, 40, 0.06);
+  color: #b23b28;
+  font-size: 0.84rem;
+}
+.form-error:empty { display: none; }
+
+/* The spam trap has to stay reachable to the DOM but invisible to people. */
+.hp { position: absolute; left: -9999px; width: 0; height: 0; opacity: 0; }
+
+.contact-form .btn-solid { width: 100%; margin-top: 8px; }
+
+.form-note { text-align: center; color: var(--muted); font-size: 0.82rem; margin: 14px 0 0; }
+
+/* ---- panel shown after a successful send ---- */
+.form-success { text-align: center; padding: 14px 0 8px; }
+.success-mark {
+  width: 46px;
+  height: 46px;
+  margin: 0 auto 18px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: 1.3rem;
+}
+.form-success h3 {
+  font-family: var(--display);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  margin: 0 0 8px;
+  font-size: 1.4rem;
+}
+.form-success p { margin: 0 0 24px; color: var(--muted); font-size: 0.92rem; }
+
+@media (max-width: 600px) {
+  .modal { padding: 12px; }
+  .modal-box { padding: 34px 22px 26px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .modal-backdrop, .modal-box { transition: none; }
+  .modal-box { transform: none; }
+}
