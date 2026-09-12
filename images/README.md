@@ -20,8 +20,8 @@ photo, held still.
 - **Landscape, not vertical.** The slide fills the full width of the screen,
   so a tall phone photo gets cropped to a thin strip.
 - **At least 1600px wide**, or it looks soft on big monitors.
-- **Keep it under ~400KB each** so the page stays fast — export as JPG at
-  around 80% quality.
+- **Keep it under ~200KB each** so the page stays fast — export as JPG at
+  75 to 80% quality; higher only adds weight. The ones here are 140–190KB.
 - **Export, don't copy.** A photo straight from a phone carries the GPS
   location where it was taken, and camera files carry the body's serial
   number. Exporting from Photos/Lightroom without metadata removes both; the

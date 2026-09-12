@@ -42,7 +42,7 @@
 
   var FONT_WAIT_CAP_MS = 2500;  // a stalled font download must not hold the curtain
   var SLIDE_MS = 5000;          // how long each hero photo stays
-  var CYCLE_MS = 3500;          // how long each item holds in a Films or Travel reel
+  var CYCLE_MS = 3500;          // how long each item holds in a reel, and each clip on the About timeline
 
   /* ---------- footer year ---------- */
 
@@ -482,12 +482,12 @@
 
   /* ---------- About: the editor's timeline ----------
      The photos in .timeline-clips, oldest first, as clips on one track
-     under a ruler of months. A playhead scrubs across the track as the section scrolls
-     through the viewport; the clip under it is the current one — bright,
-     named above the playhead, and filling the screen behind as a blurred
-     backdrop. Hovering a clip pulls the playhead to it; clicking opens the
-     photos full screen at that clip. Clip lengths repeat a short pattern so
-     the track reads as an edit, not a grid. */
+     under a ruler of months. While the section is on screen a playhead
+     steps to the next clip every CYCLE_MS; the clip under it is the current
+     one — bright, named above the playhead, and filling the screen behind
+     as a blurred backdrop. Hovering a clip pulls the playhead to it and
+     holds; clicking opens the photos full screen at that clip. Clip lengths
+     repeat a short pattern so the track reads as an edit, not a grid. */
 
   var CUT_LENGTHS = [3, 4, 2, 3, 3, 4, 2, 3, 3, 4];
 
@@ -534,13 +534,12 @@
       cut.style.setProperty('--i', i);
       cut.setAttribute('aria-label', title);
       var picture = item.querySelector('img').cloneNode();
-      picture.removeAttribute('loading');
       picture.alt = '';
       cut.appendChild(picture);
       var name = make('span', 'timeline-name mono');
       name.textContent = title;
       cut.appendChild(name);
-      cut.addEventListener('pointerenter', function () { scrubTo(starts[i] + length / total / 2); });
+      cut.addEventListener('pointerenter', function () { stop(); scrubTo(centreOf(i)); });
       cut.addEventListener('click', function () { mediaViewer('Travel', items, i, cut); });
       track.appendChild(cut);
       edge += length;
@@ -549,6 +548,7 @@
     starts.push(1);
 
     var current = -1;
+    function centreOf(i) { return (starts[i] + starts[i + 1]) / 2; }
     function scrubTo(x) {
       head.style.left = (x * 100).toFixed(2) + '%';
       now.style.left = (Math.min(Math.max(x, 0.12), 0.88) * 100).toFixed(2) + '%';
@@ -560,13 +560,12 @@
       now.textContent = items[i].querySelector('.reel-title').textContent + ' · ' + items[i].querySelector('.reel-when').textContent;
       backdrop.show(items[i].querySelector('img').src);
     }
-    // The playhead crosses the whole track while the section crosses the
-    // viewport, sitting mid-track when the section is centred.
-    function follow() {
-      var box = section.getBoundingClientRect();
-      if (box.bottom < 0 || box.top > window.innerHeight) return;
-      var progress = (window.innerHeight - box.top) / (window.innerHeight + box.height);
-      scrubTo(Math.min(0.999, Math.max(0, (progress - 0.15) / 0.7)));
+    var timer = null;
+    function stop() { clearInterval(timer); timer = null; }
+    function play() {
+      stop();
+      if (reducedMotion || items.length < 2) return;
+      timer = setInterval(function () { scrubTo(centreOf((current + 1) % items.length)); }, CYCLE_MS);
     }
     // A month label that would run into the one before it is hidden.
     function spaceLabels() {
@@ -579,11 +578,13 @@
         lastRight = box.right;
       });
     }
-    window.addEventListener('scroll', follow, { passive: true });
-    window.addEventListener('resize', function () { follow(); spaceLabels(); });
-    track.addEventListener('pointerleave', follow);
+    window.addEventListener('resize', spaceLabels);
+    track.addEventListener('pointerleave', play);
+    new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) play(); else stop();
+    }).observe(section);
     timeline.classList.add('is-live');
-    follow();
+    scrubTo(centreOf(0));
     spaceLabels();
   }
 
@@ -687,22 +688,37 @@
     }, 450);
   }
 
-  // Cycles an element's text through FLICKER_FACES with gaps that widen
-  // from FLICKER_FIRST_MS to FLICKER_LAST_MS, then clears the inline style
-  // so the stylesheet's display face takes over.
+  // Cycles the headline through FLICKER_FACES with gaps that widen from
+  // FLICKER_FIRST_MS to FLICKER_LAST_MS, then lands on the site font. Each
+  // face is its own copy of the words, laid out once and shown in turn, so
+  // a swap changes what is visible and moves nothing in layout.
   function flickerName(heading) {
+    var words = heading.firstElementChild;
+    var faces = Array.prototype.slice.call(heading.querySelectorAll('.headline-face'));
+    if (!faces.length) {
+      faces = FLICKER_FACES.map(function (face) {
+        var layer = words.cloneNode(true);
+        layer.className = 'headline-face';
+        layer.style.fontFamily = '"' + face.family + '"';
+        layer.style.fontWeight = face.weight;
+        layer.hidden = true;
+        heading.appendChild(layer);
+        return layer;
+      });
+    }
+    function show(face) {
+      faces.forEach(function (layer) { layer.hidden = layer !== face; });
+      words.hidden = face !== null;
+    }
     return new Promise(function (resolve) {
       var step = 0;
       function next() {
         if (step >= FLICKER_STEPS) {
-          heading.style.fontFamily = '';
-          heading.style.fontWeight = '';
+          show(null);
           resolve();
           return;
         }
-        var face = FLICKER_FACES[step % FLICKER_FACES.length];
-        heading.style.fontFamily = '"' + face.family + '"';
-        heading.style.fontWeight = face.weight;
+        show(faces[step % faces.length]);
         var eased = Math.pow(step / (FLICKER_STEPS - 1), 2);
         var gap = FLICKER_FIRST_MS + (FLICKER_LAST_MS - FLICKER_FIRST_MS) * eased;
         step += 1;

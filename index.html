@@ -58,18 +58,19 @@
 
     <!-- ---- HERO PHOTO ---------------------------------------------
          EDIT ME: each <img> is one slide; two or more slide in turn.
-         Upload to images/ and copy a line. See images/README.md.
+         Upload to images/ and copy a line; the first slide is the one
+         the browser fetches first, the rest wait. See images/README.md.
          The footer reuses these automatically.
          ------------------------------------------------------------- -->
     <div class="hero-slides" aria-hidden="true">
-      <img class="slide is-active" src="images/hero-1.jpg" alt="" />
-      <img class="slide" src="images/hero-2.jpg" alt="" />
-      <img class="slide" src="images/hero-3.jpg" alt="" />
-      <img class="slide" src="images/hero-4.jpg" alt="" />
+      <img class="slide is-active" src="images/hero-1.jpg" alt="" fetchpriority="high" />
+      <img class="slide" src="images/hero-2.jpg" alt="" fetchpriority="low" />
+      <img class="slide" src="images/hero-3.jpg" alt="" fetchpriority="low" />
+      <img class="slide" src="images/hero-4.jpg" alt="" fetchpriority="low" />
     </div>
 
     <div class="headline">
-      <h1 class="headline-text">Hao Bui</h1>
+      <h1 class="headline-text"><span>Hao Bui</span></h1>
       <!-- EDIT ME: the line under your name -->
       <p class="headline-sub">Places I've been, cut the way I remember them.</p>
     </div>
@@ -469,8 +470,9 @@
        ABOUT
        The bio over the editor's timeline: site.js lays the photos in the
        timeline-clips list out as clips on one track, oldest first, with a
-       playhead that scrubs as the section scrolls; the clip under it fills
-       the screen behind, blurred. Hao's cut-out fades into the track.
+       playhead that steps to the next clip every few seconds; the clip
+       under it fills the screen behind, blurred. Hao's cut-out fades into
+       the track.
        EDIT ME: the statement, the paragraph, the gear line, and
        images/hao.png — a cut-out on a transparent background, head and
        shoulders at least. The Résumé button opens resume/hao-bui.pdf in a
@@ -584,7 +586,7 @@
   <footer id="contact" class="footer">
     <div class="footer-slides" aria-hidden="true"></div>
     <div class="headline headline--footer">
-      <h2 class="headline-text" data-reveal>Get in touch</h2>
+      <h2 class="headline-text" data-reveal><span>Get in touch</span></h2>
     </div>
     <button class="btn btn-solid" type="button" data-contact-open>Send a message</button>
     <a class="to-top" href="#top" aria-label="Back to top">↑</a>
