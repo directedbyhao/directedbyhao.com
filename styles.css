@@ -755,7 +755,7 @@ html.js .about.is-in .timeline-cut.is-current { opacity: 1; transition-delay: 0s
   text-align: center;
   scroll-margin-top: var(--bar-h);
 }
-.headline--footer { position: relative; top: auto; transform: none; }
+.headline--footer { position: relative; top: auto; transform: none; width: 100%; }
 .footer .btn-solid {
   position: relative;
   z-index: 2;
