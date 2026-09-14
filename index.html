@@ -27,7 +27,7 @@
   <!-- The page's own three faces. The extra faces the name flickers through
        are listed once in site.js, which loads them itself. -->
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500&family=DM+Mono&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="assets/css/site.css" />
 </head>
 
 <body>
@@ -54,19 +54,19 @@
        The name sits centred over the photo, blended into it.
        EDIT ME: name in the <h1>, the line under it, the two lines bottom-right.
        ============================================================ -->
-  <header id="top" class="hero">
+  <section id="top" class="hero">
 
     <!-- ---- HERO PHOTO ---------------------------------------------
          EDIT ME: each <img> is one slide; two or more slide in turn.
-         Upload to images/ and copy a line; the first slide is the one
-         the browser fetches first, the rest wait. See images/README.md.
+         Upload to assets/images/ and copy a line; the first slide is the one
+         the browser fetches first, the rest wait. See assets/images/README.md.
          The footer reuses these automatically.
          ------------------------------------------------------------- -->
     <div class="hero-slides" aria-hidden="true">
-      <img class="slide is-active" src="images/hero-1.jpg" alt="" fetchpriority="high" />
-      <img class="slide" src="images/hero-2.jpg" alt="" fetchpriority="low" />
-      <img class="slide" src="images/hero-3.jpg" alt="" fetchpriority="low" />
-      <img class="slide" src="images/hero-4.jpg" alt="" fetchpriority="low" />
+      <img class="slide is-active" src="assets/images/hero/jeju-coast-at-dusk.jpg" alt="" fetchpriority="high" />
+      <img class="slide" src="assets/images/hero/kyoto-temple-terrace.jpg" alt="" fetchpriority="low" />
+      <img class="slide" src="assets/images/hero/sunset-over-the-sandbar.jpg" alt="" fetchpriority="low" />
+      <img class="slide" src="assets/images/hero/skyline.jpg" alt="" fetchpriority="low" />
     </div>
 
     <div class="headline">
@@ -81,7 +81,7 @@
     </ul>
 
     <p class="hero-role">Filmmaker<br />Boston, MA</p>
-  </header>
+  </section>
 
   <!-- ============================================================
        FILMS
@@ -158,8 +158,9 @@
        newest first.
        EDIT ME: to add a photo copy a whole <li>: the picture (with its
        width and height in pixels), then the title, then the date and
-       place. Photos with a pin on the map live in images/places/<place>/,
-       the rest in images/travel/ .
+       place. The file goes in assets/images/travel/, named for what it shows;
+       if the same photo also sits under a pin or on the About timeline,
+       put a copy in that folder too — each section keeps its own.
        ============================================================ -->
   <section id="travel" class="screen screen--band">
     <div class="screen-inner">
@@ -168,52 +169,52 @@
         <a class="reel-all" href="https://www.instagram.com/directedbyhao/" target="_blank" rel="noopener noreferrer">More on Instagram →</a>
         <ul class="reel-items">
           <li>
-            <img src="images/places/jeju/JEJU.jpg" alt="Jeju Island" width="960" height="1200" loading="lazy" />
+            <img src="assets/images/travel/jeju-island.jpg" alt="Jeju Island" width="960" height="1200" loading="lazy" />
             <h3 class="reel-title">Jeju Island</h3>
             <p class="reel-when mono">Jeju, South Korea</p>
           </li>
           <li>
-            <img src="images/places/gangneung/TRIP.jpg" alt="Trip to Gangneung" width="900" height="1200" loading="lazy" />
+            <img src="assets/images/travel/gangneung-trip.jpg" alt="Trip to Gangneung" width="900" height="1200" loading="lazy" />
             <h3 class="reel-title">Trip to Gangneung</h3>
             <p class="reel-when mono">Gangneung, South Korea</p>
           </li>
           <li>
-            <img src="images/travel/DSC00883.jpg" alt="Windmill by the sea" width="1200" height="800" loading="lazy" />
+            <img src="assets/images/travel/windmill-by-the-sea.jpg" alt="Windmill by the sea" width="1200" height="800" loading="lazy" />
             <h3 class="reel-title">Windmill by the sea</h3>
             <p class="reel-when mono">Mar 21, 2025</p>
           </li>
           <li>
-            <img src="images/travel/DSC01015.jpg" alt="Fishing off the rocks" width="800" height="1200" loading="lazy" />
+            <img src="assets/images/travel/fishing-off-the-rocks.jpg" alt="Fishing off the rocks" width="800" height="1200" loading="lazy" />
             <h3 class="reel-title">Fishing off the rocks</h3>
             <p class="reel-when mono">Mar 22, 2025</p>
           </li>
           <li>
-            <img src="images/travel/DSC00987.jpg" alt="Red bridge over the rocks" width="800" height="1200" loading="lazy" />
+            <img src="assets/images/travel/red-bridge-over-the-rocks.jpg" alt="Red bridge over the rocks" width="800" height="1200" loading="lazy" />
             <h3 class="reel-title">Red bridge over the rocks</h3>
             <p class="reel-when mono">Mar 22, 2025</p>
           </li>
           <li>
-            <img src="images/places/seoul/DSC01447.jpg" alt="Cherry blossoms at night" width="900" height="1200" loading="lazy" />
+            <img src="assets/images/travel/seoul-cherry-blossoms-at-night.jpg" alt="Cherry blossoms at night" width="900" height="1200" loading="lazy" />
             <h3 class="reel-title">Cherry blossoms at night</h3>
             <p class="reel-when mono">Apr 7, 2025 · Seoul</p>
           </li>
           <li>
-            <img src="images/travel/DSC03189.jpg" alt="Sunset over the sandbar" width="1200" height="675" loading="lazy" />
+            <img src="assets/images/travel/sunset-over-the-sandbar.jpg" alt="Sunset over the sandbar" width="1200" height="675" loading="lazy" />
             <h3 class="reel-title">Sunset over the sandbar</h3>
             <p class="reel-when mono">May 17, 2025</p>
           </li>
           <li>
-            <img src="images/places/jeju/DSC00354.jpg" alt="Jeju coast at dusk" width="1200" height="675" loading="lazy" />
+            <img src="assets/images/travel/jeju-coast-at-dusk.jpg" alt="Jeju coast at dusk" width="1200" height="675" loading="lazy" />
             <h3 class="reel-title">Jeju coast at dusk</h3>
             <p class="reel-when mono">Jun 9, 2025 · Jeju, South Korea</p>
           </li>
           <li>
-            <img src="images/places/osaka/DSC00578.jpg" alt="Dotonbori at night" width="1200" height="800" loading="lazy" />
+            <img src="assets/images/travel/osaka-dotonbori-at-night.jpg" alt="Dotonbori at night" width="1200" height="800" loading="lazy" />
             <h3 class="reel-title">Dotonbori at night</h3>
             <p class="reel-when mono">Jun 28, 2025 · Osaka</p>
           </li>
           <li>
-            <img src="images/places/kyoto/DSC00627.jpg" alt="Kyoto from the temple terrace" width="1200" height="800" loading="lazy" />
+            <img src="assets/images/travel/kyoto-temple-terrace.jpg" alt="Kyoto from the temple terrace" width="1200" height="800" loading="lazy" />
             <h3 class="reel-title">Kyoto from the temple terrace</h3>
             <p class="reel-when mono">Jul 1, 2025 · Kyoto</p>
           </li>
@@ -233,16 +234,16 @@
        Latitude/longitude are decimal degrees (south and west negative).
        Each photo or clip is an <li> like the ones in Films and Travel: the
        picture, then title, date and place, and an optional extra line.
-       Photos go in images/places/<place>/ .
+       Photos go in assets/images/places/<city>/, a copy if they are also in Travel.
        ============================================================ -->
   <section id="places" class="screen screen--ink screen--map">
     <div class="atlas" data-reveal>
       <!-- The map is the Robinson world cropped above Antarctica (see
-           images/README.md). On phones the canvas is wider than the screen
+           assets/images/README.md). On phones the canvas is wider than the screen
            and pans sideways. -->
       <div class="atlas-map">
         <div class="atlas-canvas">
-          <img class="atlas-world" src="images/world.png" alt="World map" width="2400" height="1048" />
+          <img class="atlas-world" src="assets/images/places/world.png" alt="World map" width="2400" height="1048" />
           <div class="atlas-pins"></div>
         </div>
       </div>
@@ -332,17 +333,17 @@
         <h3 class="place-name">Seoul</h3>
         <ul class="place-media">
           <li>
-            <img src="images/places/seoul/DSC01447.jpg" alt="Cherry blossoms at night" width="900" height="1200" loading="lazy" />
+            <img src="assets/images/places/seoul/seoul-cherry-blossoms-at-night.jpg" alt="Cherry blossoms at night" width="900" height="1200" loading="lazy" />
             <h3 class="reel-title">Cherry blossoms at night</h3>
             <p class="reel-when mono">Apr 7, 2025 · Seoul</p>
           </li>
           <li>
-            <img src="images/places/seoul/CHERRY.jpg" alt="Cherry blossom" width="960" height="1200" loading="lazy" />
+            <img src="assets/images/places/seoul/seoul-cherry-blossom.jpg" alt="Cherry blossom" width="960" height="1200" loading="lazy" />
             <h3 class="reel-title">Cherry blossom</h3>
             <p class="reel-when mono">Seoul</p>
           </li>
           <li>
-            <img src="images/places/gangneung/TRIP.jpg" alt="Trip to Gangneung" width="900" height="1200" loading="lazy" />
+            <img src="assets/images/places/seoul/gangneung-trip.jpg" alt="Trip to Gangneung" width="900" height="1200" loading="lazy" />
             <h3 class="reel-title">Trip to Gangneung</h3>
             <p class="reel-when mono">Gangneung, South Korea</p>
           </li>
@@ -402,12 +403,12 @@
         <h3 class="place-name">Jeju</h3>
         <ul class="place-media">
           <li>
-            <img src="images/places/jeju/DSC00354.jpg" alt="Jeju coast at dusk" width="1200" height="675" loading="lazy" />
+            <img src="assets/images/places/jeju/jeju-coast-at-dusk.jpg" alt="Jeju coast at dusk" width="1200" height="675" loading="lazy" />
             <h3 class="reel-title">Jeju coast at dusk</h3>
             <p class="reel-when mono">Jun 9, 2025 · Jeju, South Korea</p>
           </li>
           <li>
-            <img src="images/places/jeju/JEJU.jpg" alt="Jeju Island" width="960" height="1200" loading="lazy" />
+            <img src="assets/images/places/jeju/jeju-island.jpg" alt="Jeju Island" width="960" height="1200" loading="lazy" />
             <h3 class="reel-title">Jeju Island</h3>
             <p class="reel-when mono">Jeju, South Korea</p>
           </li>
@@ -422,12 +423,12 @@
         <h3 class="place-name">Osaka</h3>
         <ul class="place-media">
           <li>
-            <img src="images/places/osaka/DSC00578.jpg" alt="Dotonbori at night" width="1200" height="800" loading="lazy" />
+            <img src="assets/images/places/osaka/osaka-dotonbori-at-night.jpg" alt="Dotonbori at night" width="1200" height="800" loading="lazy" />
             <h3 class="reel-title">Dotonbori at night</h3>
             <p class="reel-when mono">Jun 28, 2025 · Osaka</p>
           </li>
           <li>
-            <img src="images/places/kyoto/DSC00627.jpg" alt="Kyoto from the temple terrace" width="1200" height="800" loading="lazy" />
+            <img src="assets/images/places/osaka/kyoto-temple-terrace.jpg" alt="Kyoto from the temple terrace" width="1200" height="800" loading="lazy" />
             <h3 class="reel-title">Kyoto from the temple terrace</h3>
             <p class="reel-when mono">Jul 1, 2025 · Kyoto</p>
           </li>
@@ -474,8 +475,8 @@
        under it fills the screen behind, blurred. Hao's cut-out fades into
        the track.
        EDIT ME: the statement, the paragraph, the gear line, and
-       images/hao.png — a cut-out on a transparent background, head and
-       shoulders at least. The Résumé button opens resume/hao-bui.pdf in a
+       assets/images/about/hao.png — a cut-out on a transparent background, head and
+       shoulders at least. The Résumé button opens assets/resume/hao-bui.pdf in a
        pop-up; replace that file to update it. The clips are the <li>s in
        timeline-clips, same shape as a TRAVEL item; ten keeps the track
        readable.
@@ -500,7 +501,7 @@
           </p>
           <p class="about-gear mono">Sony a7C II · DJI Action 5 Pro · DJI Action 6 Pro</p>
           <p class="about-actions">
-            <a class="btn" href="resume/hao-bui.pdf" data-resume-open>Résumé</a>
+            <a class="btn" href="assets/resume/hao-bui.pdf" data-resume-open>Résumé</a>
             <a class="btn" href="https://www.instagram.com/directedbyhao/" target="_blank" rel="noopener noreferrer">Instagram</a>
             <a class="btn" href="https://www.youtube.com/@haoismylife" target="_blank" rel="noopener noreferrer">YouTube</a>
             <a class="btn" href="https://www.linkedin.com/in/hao-bui-7468a1246/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
@@ -508,67 +509,67 @@
           </p>
         </div>
         <div class="about-figure">
-          <img class="about-photo" src="images/hao.png" alt="Hao Bui holding a camera" width="431" height="520" />
+          <img class="about-photo" src="assets/images/about/hao.png" alt="Hao Bui holding a camera" width="431" height="520" />
         </div>
         <div class="timeline">
           <ul class="timeline-clips" hidden>
-  
+
             <li>
-              <img src="images/travel/IMG_0035.jpg" alt="Wishes on the fence" width="900" height="1200" loading="lazy" />
+              <img src="assets/images/about/timeline/wishes-on-the-fence.jpg" alt="Wishes on the fence" width="900" height="1200" loading="lazy" />
               <h3 class="reel-title">Wishes on the fence</h3>
               <p class="reel-when mono">Mar 19, 2023</p>
             </li>
-  
+
             <li>
-              <img src="images/travel/DSC03453.jpg" alt="Lantern garden at night" width="675" height="1200" loading="lazy" />
+              <img src="assets/images/about/timeline/lantern-garden-at-night.jpg" alt="Lantern garden at night" width="675" height="1200" loading="lazy" />
               <h3 class="reel-title">Lantern garden at night</h3>
               <p class="reel-when mono">Nov 2, 2024</p>
             </li>
-  
+
             <li>
-              <img src="images/travel/DSC00883.jpg" alt="Windmill by the sea" width="1200" height="800" loading="lazy" />
+              <img src="assets/images/about/timeline/windmill-by-the-sea.jpg" alt="Windmill by the sea" width="1200" height="800" loading="lazy" />
               <h3 class="reel-title">Windmill by the sea</h3>
               <p class="reel-when mono">Mar 21, 2025</p>
             </li>
-  
+
             <li>
-              <img src="images/travel/DSC01015.jpg" alt="Fishing off the rocks" width="800" height="1200" loading="lazy" />
+              <img src="assets/images/about/timeline/fishing-off-the-rocks.jpg" alt="Fishing off the rocks" width="800" height="1200" loading="lazy" />
               <h3 class="reel-title">Fishing off the rocks</h3>
               <p class="reel-when mono">Mar 22, 2025</p>
             </li>
-  
+
             <li>
-              <img src="images/travel/DSC00987.jpg" alt="Red bridge over the rocks" width="800" height="1200" loading="lazy" />
+              <img src="assets/images/about/timeline/red-bridge-over-the-rocks.jpg" alt="Red bridge over the rocks" width="800" height="1200" loading="lazy" />
               <h3 class="reel-title">Red bridge over the rocks</h3>
               <p class="reel-when mono">Mar 22, 2025</p>
             </li>
-  
+
             <li>
-              <img src="images/places/seoul/DSC01447.jpg" alt="Cherry blossoms at night" width="900" height="1200" loading="lazy" />
+              <img src="assets/images/about/timeline/seoul-cherry-blossoms-at-night.jpg" alt="Cherry blossoms at night" width="900" height="1200" loading="lazy" />
               <h3 class="reel-title">Cherry blossoms at night</h3>
               <p class="reel-when mono">Apr 7, 2025 · Seoul</p>
             </li>
-  
+
             <li>
-              <img src="images/travel/DSC03189.jpg" alt="Sunset over the sandbar" width="1200" height="675" loading="lazy" />
+              <img src="assets/images/about/timeline/sunset-over-the-sandbar.jpg" alt="Sunset over the sandbar" width="1200" height="675" loading="lazy" />
               <h3 class="reel-title">Sunset over the sandbar</h3>
               <p class="reel-when mono">May 17, 2025</p>
             </li>
-  
+
             <li>
-              <img src="images/places/jeju/DSC00354.jpg" alt="Jeju coast at dusk" width="1200" height="675" loading="lazy" />
+              <img src="assets/images/about/timeline/jeju-coast-at-dusk.jpg" alt="Jeju coast at dusk" width="1200" height="675" loading="lazy" />
               <h3 class="reel-title">Jeju coast at dusk</h3>
               <p class="reel-when mono">Jun 9, 2025 · Jeju, South Korea</p>
             </li>
-  
+
             <li>
-              <img src="images/places/osaka/DSC00578.jpg" alt="Dotonbori at night" width="1200" height="800" loading="lazy" />
+              <img src="assets/images/about/timeline/osaka-dotonbori-at-night.jpg" alt="Dotonbori at night" width="1200" height="800" loading="lazy" />
               <h3 class="reel-title">Dotonbori at night</h3>
               <p class="reel-when mono">Jun 28, 2025 · Osaka</p>
             </li>
-  
+
             <li>
-              <img src="images/places/kyoto/DSC00627.jpg" alt="Kyoto from the temple terrace" width="1200" height="800" loading="lazy" />
+              <img src="assets/images/about/timeline/kyoto-temple-terrace.jpg" alt="Kyoto from the temple terrace" width="1200" height="800" loading="lazy" />
               <h3 class="reel-title">Kyoto from the temple terrace</h3>
               <p class="reel-when mono">Jul 1, 2025 · Kyoto</p>
             </li>
@@ -682,7 +683,7 @@
   <div class="viewer" id="place-viewer" hidden>
     <div class="viewer-box" role="dialog" aria-modal="true" aria-labelledby="viewer-name">
       <div class="viewer-head">
-        <h3 class="viewer-name" id="viewer-name"></h3>
+        <p class="viewer-name" id="viewer-name"></p>
         <button class="viewer-close" type="button" aria-label="Close">&times;</button>
       </div>
       <div class="reel viewer-reel"><ul class="reel-items"></ul></div>
@@ -699,18 +700,18 @@
       <div class="viewer-head">
         <h3 class="viewer-name" id="resume-name">Résumé</h3>
         <span class="viewer-actions">
-          <a class="btn viewer-download" href="resume/hao-bui.pdf" download>Download PDF</a>
+          <a class="btn viewer-download" href="assets/resume/hao-bui.pdf" download>Download PDF</a>
           <button class="viewer-close" type="button" aria-label="Close">&times;</button>
         </span>
       </div>
-      <object class="resume-embed" data="resume/hao-bui.pdf" type="application/pdf" aria-label="Hao Bui résumé">
+      <object class="resume-embed" data="assets/resume/hao-bui.pdf" type="application/pdf" title="Hao Bui résumé">
         <p class="resume-fallback">This browser can't show the PDF here —
-          <a href="resume/hao-bui.pdf">open it directly</a>.</p>
+          <a href="assets/resume/hao-bui.pdf">open it directly</a>.</p>
       </object>
     </div>
   </div>
 
-  <script src="site.js"></script>
+  <script src="assets/js/site.js"></script>
 
 </body>
 </html>

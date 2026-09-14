@@ -1091,3 +1091,7 @@ body.modal-lock { overflow: hidden; }
   .modal-backdrop, .modal-box { transition: none; }
   .modal-box { transform: none; }
 }
+
+/* ---- 404.html: one centred block on the site's ground. ---- */
+.not-found main { min-height: 100vh; display: grid; place-content: center; text-align: center; padding: 0 var(--gutter); }
+.not-found h1 { margin: 8px 0 28px; font-family: var(--display); font-weight: 600; font-size: clamp(2rem, 6vw, 4rem); line-height: 1.05; letter-spacing: -0.03em; }

@@ -10,14 +10,19 @@ automatically within a minute or two.
 
 ## Files
 
-| File          | What it is                                                          |
-| ------------- | ------------------------------------------------------------------- |
-| `index.html`  | The whole site: landing, Films, Travel, Places (the map), About (with the résumé pop-up), Contact. |
-| `styles.css`  | All the styling (colors, fonts, layout).                            |
-| `site.js`     | The motion: load-in, photo slides, the cycling frames, the map, the header, the contact form. |
-| `images/`     | Hero photos, the world map, `places/` photos for the map, and `travel/` photos that have no pin. |
-| `resume/`     | `hao-bui.pdf`. Replace the file to update the Résumé section.       |
-| `CNAME`       | Tells GitHub the custom domain is `directedbyhao.com`. **Do not delete or edit this.** |
+| Path | What it is |
+| ---- | ---------- |
+| `index.html` | The whole site: landing, Films, Travel, Places (the map), About (with the résumé pop-up), Contact. |
+| `404.html` | What GitHub shows for a missing address. |
+| `assets/css/site.css` | All the styling (colors, fonts, layout). |
+| `assets/js/site.js` | The motion: load-in, photo slides, the cycling frames, the map, the timeline, the header, the contact form. |
+| `assets/images/` | One folder per section: `hero/`, `travel/`, `places/` (the map and a folder per pinned city), `about/` (the cut-out and `timeline/`). A photo that appears in two sections is in both folders. |
+| `assets/resume/` | `hao-bui.pdf`. Replace the file to update the Résumé pop-up. |
+| `robots.txt` | Lets search engines index everything. |
+| `CNAME` | Tells GitHub the custom domain is `directedbyhao.com`. **Do not delete or edit this.** |
+| `.nojekyll` | Tells GitHub to serve the files as they are. Leave it. |
+| `.github/workflows/check.yml` | Checks every change on GitHub: the HTML validates and every image, stylesheet, script and PDF path resolves. `.htmlvalidate.json` holds its rules. |
+| `.editorconfig` | Editor settings so every edit uses the same indentation and line endings. |
 
 ---
 
@@ -64,8 +69,11 @@ pin in the `PLACES` list.
 `<li>` with an `<img>` (keep the `width` and `height` — the carousel lays out
 from them before the file loads), then the title and the date and place. Dated
 photos run oldest to newest, so a new one goes at the bottom and the oldest
-comes off the top. Photos of a place on the map go in `images/places/<place>/`;
-others in `images/travel/`. About 1200px on the long side.
+comes off the top. The file goes in `assets/images/travel/`, named for what it shows
+with the city first when there is one (`kyoto-temple-terrace.jpg`), about
+1200px on the long side. If the same photo also sits under a pin or on the
+About timeline, put a copy in that folder too: every section's pictures live
+in its own folder, and a duplicate is cheaper than a wrong path.
 
 **Add a place to the map** — In the `PLACES` section, copy one whole
 `<li class="place"> … </li>` block. Set `data-lat` and `data-lon` (decimal
@@ -74,7 +82,8 @@ and the photos or clips inside it — each is an `<li>` like the ones in Films
 and Travel, with the same text lines. A pin can be a city or a whole region
 (the map is the whole world, so cities an hour apart share a dot); each
 item's date-and-place line names the city. Photos go in
-`images/places/<place>/` at about 1200px on the long side. The pin draws
+`assets/images/places/<city>/` at about 1200px on the long side, a copy if they are
+also in Travel. The pin draws
 itself; clicking it opens everything under it full screen.
 
 **Change the tabs** — The header bar in `index.html` has one link per section;
@@ -83,20 +92,20 @@ each points at the section's `id`.
 **Change your name or the footer headline** — The name is the `<h1>` in the
 hero; the footer headline is the `<h2>` in the footer. Both shrink to fit.
 
-**Change the hero photos** — See `images/README.md`. The footer reuses the
+**Change the hero photos** — See `assets/images/README.md`. The footer reuses the
 first one automatically.
 
-**Update the résumé** — Replace `resume/hao-bui.pdf` with the new file, same
-name. The Résumé button in About opens it in a pop-up with a download link.
+**Update the résumé** — Replace `assets/resume/hao-bui.pdf` with the new file, same
+name; its address is `directedbyhao.com/assets/resume/hao-bui.pdf`. The Résumé button in About opens it in a pop-up with a download link.
 
 **The timeline under About** is its own list of photos laid out as an edit,
 oldest first, with the ruler labelled by month: the `<ul class="timeline-clips">`
 inside the `ABOUT` section, hidden until the script builds the track. Each
 `<li>` has the same shape as a Travel item, and a photo can be in both lists
-or just one. Ten keeps the track readable. A photo with no date lands at
-the end.
+or just one; its file lives in `assets/images/about/timeline/`. Ten keeps the track
+readable. A photo with no date lands at the end.
 
-**Change the About photo** — `images/hao.png` is a cut-out of Hao on a
+**Change the About photo** — `assets/images/about/hao.png` is a cut-out of Hao on a
 transparent background (the iMessage-sticker kind: Photos → long-press the
 subject → Copy, or Preview → Remove Background). It stands on the timeline
 at the right of the About screen, as tall as the room between the title and
@@ -104,17 +113,17 @@ the track, so head and shoulders is the framing that works; the copy runs
 right up to its edge. It is drawn as tall as the screen allows, about 760px
 on a 1080p display, so export it at least 1500px tall to stay sharp on
 Retina screens. Its shape is written in two places: the `width`/`height` on the
-`<img>` in `index.html` and the `431 / 520` on `.about` in `styles.css`;
+`<img>` in `index.html` and the `431 / 520` on `.about` in `assets/css/site.css`;
 change both if the new cut-out has different proportions.
 
-**Change the accent colour** — Edit `--accent` at the top of `styles.css`.
+**Change the accent colour** — Edit `--accent` at the top of `assets/css/site.css`.
 
 **Change the fonts** — The page fonts are named in two places that must agree:
 the Google Fonts `<link>` in `index.html` and `--display`, `--font`, `--mono`
-at the top of `styles.css`. The extra faces the name flickers through are
-listed once, in `site.js` (`FLICKER_FACES`).
+at the top of `assets/css/site.css`. The extra faces the name flickers through are
+listed once, in `assets/js/site.js` (`FLICKER_FACES`).
 
-**Remove an effect** — Open `site.js`. Each effect is one function, started
+**Remove an effect** — Open `assets/js/site.js`. Each effect is one function, started
 from the short list at the bottom of the first block. Delete the line that
 starts it: `revealHero` (curtain and the name's flicker), `slidePhotos`,
 `buildReels` (the Films and Travel frames), `buildAtlas` (the map),
@@ -157,7 +166,7 @@ PDF as the only embedded document. Anything else is refused. Two consequences:
   line without updating the hash disables it — the page then shows its
   no-script layout (everything visible, no motion). Leave it alone.
 
-Photos should be exported without metadata (see `images/README.md`).
+Photos should be exported without metadata (see `assets/images/README.md`).
 
 Settings that keep the hosting itself safe, all in the owner's hands:
 
