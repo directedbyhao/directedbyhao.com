@@ -18,6 +18,7 @@ automatically within a minute or two.
 | `assets/js/site.js` | The motion: load-in, photo slides, the cycling frames, the map, the timeline, the header, the contact form. |
 | `assets/images/` | One folder per section: `hero/`, `travel/`, `places/` (the map and a folder per pinned city), `about/` (the cut-out and `timeline/`). A photo that appears in two sections is in both folders. |
 | `assets/resume/` | `hao-bui.pdf`. Replace the file to update the Résumé pop-up. |
+| `assets/video/` | The Work section's films: H.264 MP4s under about 30 MB each, downloaded only when played. |
 | `robots.txt` | Lets search engines index everything. |
 | `CNAME` | Tells GitHub the custom domain is `directedbyhao.com`. **Do not delete or edit this.** |
 | `.nojekyll` | Tells GitHub to serve the files as they are. Leave it. |
@@ -54,6 +55,15 @@ git push
 ---
 
 ## Common tasks
+
+**Add a project to Work** — In the `WORK` section copy a whole
+`<article class="project">`: `project--wide` for a landscape film,
+`project--tall` for a portrait one. The MP4 goes in `assets/video/` as H.264,
+720p or 1080p, under about 30 MB (GitHub refuses a file over 100 MB, and a
+visitor downloads the whole thing when they press play); compress it on a
+computer with HandBrake or similar, the GitHub site cannot. Its poster goes in
+`assets/images/work/` as a 1200px JPEG. Then the title, the client · kind ·
+date line, the credits, and a short note if there is one.
 
 **Add a vlog to Films** — In `index.html`, find the `FILMS` section and copy one
 whole `<li>` inside `<ul class="reel-items">`. Change the YouTube ID (the part

@@ -304,6 +304,31 @@ html.js .headline-text[data-reveal] { transform: none; letter-spacing: 0.08em; }
 html.js .screen-title[data-reveal].is-in { letter-spacing: -0.04em; }
 html.js .headline-text[data-reveal].is-in { letter-spacing: -0.04em; }
 
+/* ---- Work: two client films side by side. Both players share one
+   height, the landscape one wide and the portrait one narrow, so the row
+   reads as a pair; the copy sits under each. ---- */
+.work {
+  --project-h: clamp(200px, calc(100vh - 480px), 440px);
+  display: flex;
+  align-items: flex-start;
+  gap: 36px;
+}
+.project { min-width: 0; }
+.project-video { display: block; height: var(--project-h); border-radius: 3px; background: #000; }
+.project--wide .project-video { width: calc(var(--project-h) * 16 / 9); }
+.project--tall .project-video { width: calc(var(--project-h) * 9 / 16); }
+.project-title { display: flex; align-items: center; gap: 10px; margin: 14px 0 4px; font-size: 1.05rem; }
+.project-mark { height: 20px; width: auto; padding: 3px 5px; border-radius: 4px; background: #fff; }
+.project-meta { margin: 0; font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.project-credits { margin: 6px 0 0; font-size: 0.9rem; color: var(--muted); }
+.project-note { margin: 8px 0 0; max-width: 62ch; font-size: 0.95rem; line-height: 1.5; }
+@media (max-width: 600px) {
+  .work { flex-direction: column; gap: 28px; }
+  .project-video, .project--wide .project-video, .project--tall .project-video { width: 100%; height: auto; }
+  .project--wide .project-video { aspect-ratio: 16 / 9; }
+  .project--tall .project-video { aspect-ratio: 9 / 16; }
+}
+
 /* ---- Films and Travel: the reel ----
    .reel-items is the data: one <li> per item holding an <a class="clip">
    or an <img>, then its .reel-title, .reel-when and optional .reel-line.

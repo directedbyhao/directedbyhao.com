@@ -39,6 +39,8 @@ photo, held still.
   appears in two of them is in both folders, on purpose: each section's
   pictures live in its own folder. Around 1200px on the long side; every
   file is listed in `index.html`.
+- `work/` — posters for the films in Work, 1200px JPEGs, plus a client's logo
+  where the client allows it.
 - `about/hao.png` — the cut-out of Hao in About; transparent background. Its
   431:520 proportions are written into `index.html` and `assets/css/site.css`; see
   the README's "Change the About photo".
