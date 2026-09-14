@@ -612,6 +612,54 @@
     place();
   }
 
+  /* ---------- Work: the rail ----------
+     On a desktop window with motion allowed, the Work section grows by
+     the width its rail overhangs and its inner pins under the bar, so
+     scrolling through the section moves the rail sideways, one slide per
+     screen. Focus landing in a slide scrolls the page to where that slide
+     shows. Phones, reduced motion and no script keep the slides stacked. */
+  function railWorkOnScroll() {
+    var section = document.querySelector('.screen--rail');
+    var rail = section && section.querySelector('.rail');
+    if (!rail) return;
+    var pieces = rail.children.length;
+    section.querySelector('.rail-hint').textContent = pieces + (pieces === 1 ? ' film' : ' films') + ' \u00b7 keep scrolling';
+    if (reducedMotion || pieces < 2) return;
+    var bar = document.querySelector('.site-header');
+    var desktop = window.matchMedia('(min-width: 769px)');
+    var travel = 0;
+
+    function place() {
+      if (!travel) return;
+      var above = bar.offsetHeight - section.getBoundingClientRect().top;
+      var progress = Math.min(1, Math.max(0, above / travel));
+      rail.style.setProperty('--rail-x', (-progress * travel).toFixed(1) + 'px');
+    }
+    function measure() {
+      section.style.height = '';
+      section.classList.toggle('is-railed', desktop.matches);
+      travel = desktop.matches ? rail.scrollWidth - rail.clientWidth : 0;
+      if (travel) section.style.height = (section.offsetHeight + travel) + 'px';
+      else rail.style.setProperty('--rail-x', '0px');
+      place();
+    }
+    rail.addEventListener('focusin', function (event) {
+      var piece = event.target.closest('.piece');
+      if (!piece || !travel) return;
+      var index = Array.prototype.indexOf.call(rail.children, piece);
+      var sectionTop = window.scrollY + section.getBoundingClientRect().top - bar.offsetHeight;
+      window.scrollTo({ top: sectionTop + travel * index / (pieces - 1), behavior: 'instant' });
+    });
+    var queued = false;
+    window.addEventListener('scroll', function () {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(function () { queued = false; place(); });
+    }, { passive: true });
+    window.addEventListener('resize', measure);
+    measure();
+  }
+
   /* ---------- arrivals: blocks lift in, titles settle in ---------- */
 
   function whenFirstSeen(elements, threshold, callback) {
@@ -776,6 +824,7 @@
   openResumeOnClick();
   driftMapWithPointer();
   driftAboutOnScroll();
+  railWorkOnScroll();
   revealOnArrival();
   underlineCurrentSection();
   dimHeaderOnScroll();

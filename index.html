@@ -86,29 +86,37 @@
 
   <!-- ============================================================
        WORK
-       Client pieces, side by side: a player with a poster, then the title,
-       a client · kind · date line, the credits and a short note. The films
-       live in assets/video/ and download only when played.
-       EDIT ME: to add a piece copy a whole <article class="project">.
-       project--wide is a landscape film, project--tall a portrait one.
+       Client films, one piece each: a player with a poster, then the title,
+       a client · kind · date line, the credits and a short note. On a
+       desktop window the section pins while the page scrolls and the rail
+       of pieces moves sideways, one per screen; on phones and without
+       motion the pieces stack. The films live in assets/video/ and download
+       only when played.
+       EDIT ME: to add a piece copy a whole <article class="piece">.
+       piece--wide is a landscape film, piece--tall a portrait one.
        See the README's "Add a project to Work" for sizes.
        ============================================================ -->
-  <section id="work" class="screen screen--band">
+  <section id="work" class="screen screen--band screen--rail">
     <div class="screen-inner">
       <h2 class="screen-title" data-reveal>Work</h2>
-      <div class="work" data-reveal>
-        <article class="project project--wide">
-          <video class="project-video" controls playsinline preload="none" poster="assets/images/work/vierra-digital.jpg" src="assets/video/vierra-digital-overview.mp4" width="1280" height="720"></video>
-          <h3 class="project-title"><img class="project-mark" src="assets/images/work/vierra-logo.png" alt="" width="476" height="197" />Vierra Digital</h3>
-          <p class="project-meta mono">Corporate overview film · August 2026</p>
-          <p class="project-credits">Production, lighting, motion graphics, edit</p>
-          <p class="project-note">A two and a half minute overview film introducing Vierra Digital's services to prospective clients. Produced as a single-camera interview with a controlled lighting setup. Custom motion graphics run throughout, visualizing each service as it is described rather than leaving it to voiceover alone. Post production and color in DaVinci Resolve.</p>
+      <p class="rail-hint mono"></p>
+      <div class="rail">
+        <article class="piece piece--wide">
+          <video class="piece-video" controls playsinline preload="none" poster="assets/images/work/vierra-digital.jpg" src="assets/video/vierra-digital-overview.mp4" width="1280" height="720"></video>
+          <div class="piece-text">
+            <h3 class="piece-title"><img class="piece-mark" src="assets/images/work/vierra-logo.png" alt="" width="476" height="197" />Vierra Digital</h3>
+            <p class="piece-meta mono">Corporate overview film · August 2026</p>
+            <p class="piece-credits">Production, lighting, motion graphics, edit</p>
+            <p class="piece-note">A two and a half minute overview film introducing Vierra Digital's services to prospective clients. Produced as a single-camera interview with a controlled lighting setup. Custom motion graphics run throughout, visualizing each service as it is described rather than leaving it to voiceover alone. Post production and color in DaVinci Resolve.</p>
+          </div>
         </article>
-        <article class="project project--tall">
-          <video class="project-video" controls playsinline preload="none" poster="assets/images/work/rolling-loud.jpg" src="assets/video/rolling-loud-apparel-campaign.mp4" width="1080" height="1920"></video>
-          <h3 class="project-title">Apparel campaign</h3>
-          <p class="project-meta mono">Rolling Loud, Miami · Mar 2026</p>
-          <p class="project-credits">Edit: Hao Bui · Client under NDA</p>
+        <article class="piece piece--tall">
+          <video class="piece-video" controls playsinline preload="none" poster="assets/images/work/rolling-loud.jpg" src="assets/video/rolling-loud-apparel-campaign.mp4" width="1080" height="1920"></video>
+          <div class="piece-text">
+            <h3 class="piece-title">Apparel campaign</h3>
+            <p class="piece-meta mono">Rolling Loud, Miami · Mar 2026</p>
+            <p class="piece-credits">Edit: Hao Bui · Client under NDA</p>
+          </div>
         </article>
       </div>
     </div>

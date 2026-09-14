@@ -57,8 +57,10 @@ git push
 ## Common tasks
 
 **Add a project to Work** — In the `WORK` section copy a whole
-`<article class="project">`: `project--wide` for a landscape film,
-`project--tall` for a portrait one. The MP4 goes in `assets/video/` as H.264,
+`<article class="piece">`: `piece--wide` for a landscape film, `piece--tall`
+for a portrait one. On a desktop the section pins while the page scrolls and
+the pieces move sideways one per screen, so a new piece makes that stretch one
+screen longer; on phones they stack. The MP4 goes in `assets/video/` as H.264,
 720p or 1080p, under about 30 MB (GitHub refuses a file over 100 MB, and a
 visitor downloads the whole thing when they press play); compress it on a
 computer with HandBrake or similar, the GitHub site cannot. Its poster goes in
@@ -137,7 +139,8 @@ listed once, in `assets/js/site.js` (`FLICKER_FACES`).
 from the short list at the bottom of the first block. Delete the line that
 starts it: `revealHero` (curtain and the name's flicker), `slidePhotos`,
 `buildReels` (the Films and Travel frames), `buildAtlas` (the map),
-`buildTimeline` (the About timeline), `openResumeOnClick` (the résumé
+`buildTimeline` (the About timeline), `railWorkOnScroll` (the sideways scroll
+through Work; without it the films stack), `openResumeOnClick` (the résumé
 pop-up), `driftMapWithPointer`, `driftAboutOnScroll` (Hao sitting behind the
 About text), `revealOnArrival`, `underlineCurrentSection`, `dimHeaderOnScroll`.
 

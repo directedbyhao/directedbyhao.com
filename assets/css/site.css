@@ -304,30 +304,29 @@ html.js .headline-text[data-reveal] { transform: none; letter-spacing: 0.08em; }
 html.js .screen-title[data-reveal].is-in { letter-spacing: -0.04em; }
 html.js .headline-text[data-reveal].is-in { letter-spacing: -0.04em; }
 
-/* ---- Work: two client films side by side. Both players share one
-   height, the landscape one wide and the portrait one narrow, so the row
-   reads as a pair; the copy sits under each. ---- */
-.work {
-  --project-h: clamp(200px, calc(100vh - 480px), 440px);
-  display: flex;
-  align-items: flex-start;
-  gap: 36px;
-}
-.project { min-width: 0; }
-.project-video { display: block; height: var(--project-h); border-radius: 3px; background: #000; }
-.project--wide .project-video { width: calc(var(--project-h) * 16 / 9); }
-.project--tall .project-video { width: calc(var(--project-h) * 9 / 16); }
-.project-title { display: flex; align-items: center; gap: 10px; margin: 14px 0 4px; font-size: 1.05rem; }
-.project-mark { height: 20px; width: auto; padding: 3px 5px; border-radius: 4px; background: #fff; }
-.project-meta { margin: 0; font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
-.project-credits { margin: 6px 0 0; font-size: 0.9rem; color: var(--muted); }
-.project-note { margin: 8px 0 0; max-width: 62ch; font-size: 0.95rem; line-height: 1.5; }
-@media (max-width: 600px) {
-  .work { flex-direction: column; gap: 28px; }
-  .project-video, .project--wide .project-video, .project--tall .project-video { width: 100%; height: auto; }
-  .project--wide .project-video { aspect-ratio: 16 / 9; }
-  .project--tall .project-video { aspect-ratio: 9 / 16; }
-}
+/* ---- Work: the client films, one slide each. Stacked by default. On a
+   desktop window with motion allowed site.js adds .is-railed: the inner
+   pins under the bar for the section's whole height, every slide is one
+   content column wide, and the rail moves left by --rail-x as the page
+   scrolls through the section. ---- */
+.rail-hint { margin: 0 0 18px; font-size: 0.78rem; color: var(--accent); }
+html:not(.js) .rail-hint { display: none; }
+.rail { display: flex; flex-direction: column; gap: 40px; }
+.piece { display: flex; flex-wrap: wrap; gap: 24px 36px; align-items: flex-start; }
+.piece-video { display: block; height: auto; max-width: 100%; border-radius: 3px; background: #000; }
+.piece--wide .piece-video { width: min(100%, 720px); aspect-ratio: 16 / 9; }
+.piece--tall .piece-video { width: min(100%, 260px); aspect-ratio: 9 / 16; }
+.piece-text { flex: 1 1 260px; min-width: 0; }
+.piece-title { display: flex; align-items: center; gap: 10px; margin: 0 0 4px; font-size: 1.05rem; }
+.piece-mark { height: 20px; width: auto; padding: 3px 5px; border-radius: 4px; background: #fff; }
+.piece-meta { margin: 0; font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.piece-credits { margin: 6px 0 0; font-size: 0.9rem; color: var(--muted); }
+.piece-note { margin: 10px 0 0; max-width: 56ch; font-size: 0.95rem; line-height: 1.5; }
+.screen--rail.is-railed .screen-inner { position: sticky; top: var(--bar-h); flex: none; height: calc(100vh - var(--bar-h)); overflow: hidden; }
+.screen--rail.is-railed .rail { flex: 1; min-height: 0; flex-direction: row; gap: var(--gutter); transform: translateX(var(--rail-x, 0px)); will-change: transform; }
+.screen--rail.is-railed .piece { flex: 0 0 100%; flex-wrap: nowrap; height: 100%; align-items: flex-start; }
+.screen--rail.is-railed .piece-video { width: auto; height: auto; max-height: 100%; max-width: 62%; }
+.screen--rail.is-railed .piece--tall .piece-video { max-width: 40%; }
 
 /* ---- Films and Travel: the reel ----
    .reel-items is the data: one <li> per item holding an <a class="clip">
