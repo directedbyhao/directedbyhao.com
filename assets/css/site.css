@@ -555,6 +555,10 @@ html:not(.js) .atlas-hint { display: none; }
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
 }
 .pin:hover .pin-name, .pin.is-active .pin-name { color: #fff; }
+/* A label with no clear side on a crowded map waits for its pin to be
+   hovered, focused or open. */
+.pin-name.is-crowded { opacity: 0; }
+.pin:hover .pin-name, .pin:focus-visible .pin-name, .pin.is-active .pin-name { opacity: 1; }
 .pin-name[data-side="top"]    { left: 50%; bottom: calc(50% + 12px); transform: translateX(-50%); }
 .pin-name[data-side="bottom"] { left: 50%; top: calc(50% + 12px); transform: translateX(-50%); }
 .pin-name[data-side="right"]  { left: calc(50% + 14px); top: 50%; transform: translateY(-50%); }

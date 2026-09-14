@@ -368,15 +368,16 @@
 
     // Labels are measured on screen, so pins are laid out again when the
     // window changes size.
-    // How much of `a` is covered by `b`, with a little breathing room.
-    function overlap(a, b) {
-      var pad = 4;
+    // How much of `a` is covered by `b`, counting `pad` pixels of nearness as cover.
+    function overlap(a, b, pad) {
       var w = Math.min(a.right, b.right) - Math.max(a.left, b.left) + pad;
       var h = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) + pad;
       return w > 0 && h > 0 ? w * h : 0;
     }
-    // Each label tries eight sides and keeps the first that covers no dot
-    // and no label already placed — or, in a crowd, the one covering least.
+    // Each label tries eight sides and keeps the first that clears every
+    // dot and label already placed by a small margin. In a crowd it keeps
+    // the side covering least; if that side still truly overlaps something,
+    // the label is hidden until its pin is hovered, focused or open.
     var LABEL_SIDES = ['top', 'bottom', 'right', 'left', 'top-right', 'top-left', 'bottom-right', 'bottom-left'];
     function placeLabels() {
       var taken = pins.map(function (pin) { return pin.querySelector('.pin-dot').getBoundingClientRect(); });
@@ -386,11 +387,14 @@
         for (var k = 0; k < LABEL_SIDES.length && least > 0; k++) {
           label.dataset.side = LABEL_SIDES[k];
           var rect = label.getBoundingClientRect();
-          var covered = taken.reduce(function (sum, other) { return sum + overlap(rect, other); }, 0);
+          var covered = taken.reduce(function (sum, other) { return sum + overlap(rect, other, 4); }, 0);
           if (covered < least) { least = covered; best = LABEL_SIDES[k]; }
         }
         label.dataset.side = best;
-        taken.push(label.getBoundingClientRect());
+        var rect = label.getBoundingClientRect();
+        var hidden = taken.some(function (other) { return overlap(rect, other, 0) > 0; });
+        label.classList.toggle('is-crowded', hidden);
+        if (!hidden) taken.push(rect);
       });
     }
     function layoutPins() {
