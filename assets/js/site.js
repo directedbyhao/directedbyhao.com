@@ -360,10 +360,14 @@
     if (!places.length || !pinLayer) return;
     var pins = [];
 
-    function openViewer(place, pin) {
+    var key = atlas.querySelector('.atlas-key');
+    var keyButtons = [];
+
+    function openViewer(place, pin, opener) {
       pins.forEach(function (other) { other.classList.toggle('is-active', other === pin); });
+      keyButtons.forEach(function (button, k) { button.classList.toggle('is-active', places[k] === place); });
       var media = Array.prototype.slice.call(place.querySelectorAll('.place-media > li'));
-      mediaViewer(place.querySelector('.place-name').textContent, media, 0, pin);
+      mediaViewer(place.querySelector('.place-name').textContent, media, 0, opener);
     }
 
     // Labels are measured on screen, so pins are laid out again when the
@@ -431,7 +435,29 @@
       placeLabels();
     }
 
+    // The key lists every place beside the map; a name opens what its pin
+    // opens and lights the pin while pointed at. It is built before the pins
+    // so the map, and the labels measured on it, have their final width.
+    Array.prototype.forEach.call(places, function (place, index) {
+      var button = make('button', 'key-place');
+      button.type = 'button';
+      var name = make('span', '');
+      name.textContent = place.querySelector('.place-name').textContent;
+      var count = make('span', 'key-count mono');
+      count.textContent = place.querySelectorAll('.place-media > li').length;
+      button.appendChild(name);
+      button.appendChild(count);
+      button.addEventListener('click', function () { openViewer(place, pins[index], button); });
+      button.addEventListener('pointerenter', function () { pins[index].classList.add('is-lit'); });
+      button.addEventListener('pointerleave', function () { pins[index].classList.remove('is-lit'); });
+      var entry = make('li', '');
+      entry.appendChild(button);
+      key.appendChild(entry);
+      keyButtons.push(button);
+    });
+
     layoutPins();
+    document.fonts.ready.then(layoutPins);   // label widths change when the web font lands
 
     // Neighbouring cities overlap their 44px targets, so the pin whose dot
     // is nearest the pointer is the one meant: it rises to the top as the
@@ -455,7 +481,7 @@
       var clicked = event.target.closest('.pin');
       if (!clicked) return;
       var pin = event.detail === 0 ? clicked : nearestPin(event.clientX, event.clientY);
-      openViewer(places[pins.indexOf(pin)], pin);
+      openViewer(places[pins.indexOf(pin)], pin, pin);
     });
 
     var relayoutTimer = null;
@@ -464,7 +490,7 @@
       relayoutTimer = setTimeout(layoutPins, 150);
     });
 
-    hint.textContent = places.length + (places.length === 1 ? ' place' : ' places') + ' · click a pin';
+    hint.textContent = places.length + (places.length === 1 ? ' place' : ' places') + ' · click a pin or a name';
     atlas.classList.add('is-live');
   }
 
@@ -613,51 +639,34 @@
   }
 
   /* ---------- Work: the rail ----------
-     On a desktop window with motion allowed, the Work section grows by
-     the width its rail overhangs and its inner pins under the bar, so
-     scrolling through the section moves the rail sideways, one slide per
-     screen. Focus landing in a slide scrolls the page to where that slide
-     shows. Phones, reduced motion and no script keep the slides stacked. */
-  function railWorkOnScroll() {
-    var section = document.querySelector('.screen--rail');
-    var rail = section && section.querySelector('.rail');
-    if (!rail) return;
-    var pieces = rail.children.length;
-    section.querySelector('.rail-hint').textContent = pieces + (pieces === 1 ? ' film' : ' films') + ' \u00b7 keep scrolling';
-    if (reducedMotion || pieces < 2) return;
-    var bar = document.querySelector('.site-header');
-    var desktop = window.matchMedia('(min-width: 769px)');
-    var travel = 0;
-
-    function place() {
-      if (!travel) return;
-      var above = bar.offsetHeight - section.getBoundingClientRect().top;
-      var progress = Math.min(1, Math.max(0, above / travel));
-      rail.style.setProperty('--rail-x', (-progress * travel).toFixed(1) + 'px');
+     The pieces scroll sideways by hand, one rail width each, snapping into
+     place. The arrows step one piece for a mouse and dim at the ends. The
+     players hide their download button and refuse the context menu, which
+     deters saving; the files themselves stay public at their addresses. */
+  function buildWorkRail() {
+    var stage = document.querySelector('.rail-stage');
+    if (!stage) return;
+    var rail = stage.querySelector('.rail');
+    var pieces = rail.children;
+    document.querySelector('.rail-hint').textContent = pieces.length + (pieces.length === 1 ? ' film' : ' films') + ' \u00b7 swipe sideways';
+    var previous = stage.querySelector('.rail-prev');
+    var next = stage.querySelector('.rail-next');
+    function stepBy(direction) {
+      var pieceStride = pieces.length > 1 ? pieces[1].offsetLeft - pieces[0].offsetLeft : rail.clientWidth;
+      rail.scrollBy({ left: direction * pieceStride, behavior: reducedMotion ? 'auto' : 'smooth' });
     }
-    function measure() {
-      section.style.height = '';
-      section.classList.toggle('is-railed', desktop.matches);
-      travel = desktop.matches ? rail.scrollWidth - rail.clientWidth : 0;
-      if (travel) section.style.height = (section.offsetHeight + travel) + 'px';
-      else rail.style.setProperty('--rail-x', '0px');
-      place();
+    function dimEnds() {
+      previous.disabled = rail.scrollLeft <= 1;
+      next.disabled = rail.scrollLeft >= rail.scrollWidth - rail.clientWidth - 1;
     }
-    rail.addEventListener('focusin', function (event) {
-      var piece = event.target.closest('.piece');
-      if (!piece || !travel) return;
-      var index = Array.prototype.indexOf.call(rail.children, piece);
-      var sectionTop = window.scrollY + section.getBoundingClientRect().top - bar.offsetHeight;
-      window.scrollTo({ top: sectionTop + travel * index / (pieces - 1), behavior: 'instant' });
+    previous.addEventListener('click', function () { stepBy(-1); });
+    next.addEventListener('click', function () { stepBy(1); });
+    rail.addEventListener('scroll', dimEnds, { passive: true });
+    window.addEventListener('resize', dimEnds);
+    rail.querySelectorAll('video').forEach(function (video) {
+      video.addEventListener('contextmenu', function (event) { event.preventDefault(); });
     });
-    var queued = false;
-    window.addEventListener('scroll', function () {
-      if (queued) return;
-      queued = true;
-      requestAnimationFrame(function () { queued = false; place(); });
-    }, { passive: true });
-    window.addEventListener('resize', measure);
-    measure();
+    dimEnds();
   }
 
   /* ---------- arrivals: blocks lift in, titles settle in ---------- */
@@ -824,7 +833,7 @@
   openResumeOnClick();
   driftMapWithPointer();
   driftAboutOnScroll();
-  railWorkOnScroll();
+  buildWorkRail();
   revealOnArrival();
   underlineCurrentSection();
   dimHeaderOnScroll();

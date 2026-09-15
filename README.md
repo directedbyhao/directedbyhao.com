@@ -58,14 +58,16 @@ git push
 
 **Add a project to Work** — In the `WORK` section copy a whole
 `<article class="piece">`: `piece--wide` for a landscape film, `piece--tall`
-for a portrait one. On a desktop the section pins while the page scrolls and
-the pieces move sideways one per screen, so a new piece makes that stretch one
-screen longer; on phones they stack. The MP4 goes in `assets/video/` as H.264,
-720p or 1080p, under about 30 MB (GitHub refuses a file over 100 MB, and a
-visitor downloads the whole thing when they press play); compress it on a
+for a portrait one, newest first. The pieces sit on a rail that scrolls
+sideways: swipe on a trackpad or phone, or use the arrows; each piece is one
+screen wide, so a new one adds one more stop. The MP4 goes in `assets/video/`
+as H.264, 720p or 1080p, under about 30 MB (GitHub refuses a file over 100 MB,
+and a visitor downloads the whole thing when they press play); compress it on a
 computer with HandBrake or similar, the GitHub site cannot. Its poster goes in
 `assets/images/work/` as a 1200px JPEG. Then the title, the client · kind ·
-date line, the credits, and a short note if there is one.
+date line, the credits, and a short note if there is one. The players hide the
+browser's download button and ignore right-click, which deters casual saving;
+the file itself is still public at its address, like every file on this site.
 
 **Add a vlog to Films** — In `index.html`, find the `FILMS` section and copy one
 whole `<li>` inside `<ul class="reel-items">`. Change the YouTube ID (the part
@@ -96,7 +98,8 @@ and Travel, with the same text lines. A pin can be a city or a whole region
 item's date-and-place line names the city. Photos go in
 `assets/images/places/<city>/` at about 1200px on the long side, a copy if they are
 also in Travel. The pin draws
-itself; clicking it opens everything under it full screen.
+itself and the key beside the map lists the place with its count; clicking
+either opens everything under it full screen.
 
 **Change the tabs** — The header bar in `index.html` has one link per section;
 each points at the section's `id`.
@@ -139,8 +142,8 @@ listed once, in `assets/js/site.js` (`FLICKER_FACES`).
 from the short list at the bottom of the first block. Delete the line that
 starts it: `revealHero` (curtain and the name's flicker), `slidePhotos`,
 `buildReels` (the Films and Travel frames), `buildAtlas` (the map),
-`buildTimeline` (the About timeline), `railWorkOnScroll` (the sideways scroll
-through Work; without it the films stack), `openResumeOnClick` (the résumé
+`buildTimeline` (the About timeline), `buildWorkRail` (the Work arrows and the
+players' download guard; the rail still swipes without it), `openResumeOnClick` (the résumé
 pop-up), `driftMapWithPointer`, `driftAboutOnScroll` (Hao sitting behind the
 About text), `revealOnArrival`, `underlineCurrentSection`, `dimHeaderOnScroll`.
 

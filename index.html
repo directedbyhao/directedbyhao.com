@@ -86,23 +86,33 @@
 
   <!-- ============================================================
        WORK
-       Client films, one piece each: a player with a poster, then the title,
-       a client · kind · date line, the credits and a short note. On a
-       desktop window the section pins while the page scrolls and the rail
-       of pieces moves sideways, one per screen; on phones and without
-       motion the pieces stack. The films live in assets/video/ and download
-       only when played.
+       Client films on a rail that scrolls sideways by hand: swipe on a
+       trackpad or phone, or use the arrows. One piece per rail width: a
+       player with a poster, then the title, a client · kind · date line,
+       the credits and a short note. Newest first. The films live in
+       assets/video/ and download only when played.
        EDIT ME: to add a piece copy a whole <article class="piece">.
        piece--wide is a landscape film, piece--tall a portrait one.
        See the README's "Add a project to Work" for sizes.
        ============================================================ -->
-  <section id="work" class="screen screen--band screen--rail">
+  <section id="work" class="screen screen--band">
     <div class="screen-inner">
       <h2 class="screen-title" data-reveal>Work</h2>
       <p class="rail-hint mono"></p>
-      <div class="rail">
+      <div class="rail-stage" data-reveal>
+        <button class="reel-arrow rail-prev" type="button" aria-label="Previous film">‹</button>
+        <div class="rail">
         <article class="piece piece--wide">
-          <video class="piece-video" controls playsinline preload="none" poster="assets/images/work/vierra-digital.jpg" src="assets/video/vierra-digital-overview.mp4" width="1280" height="720"></video>
+          <video class="piece-video" controls controlslist="nodownload" playsinline preload="none" poster="assets/images/work/pichanny-som.jpg" src="assets/video/pichanny-som-audition-tape.mp4" width="1280" height="720"></video>
+          <div class="piece-text">
+            <h3 class="piece-title">Pichanny Som</h3>
+            <p class="piece-meta mono">Sports audition tape · September 2026</p>
+            <p class="piece-credits">Production, direction, edit</p>
+            <p class="piece-note">An audition tape built to demonstrate athletic range across four sports for a commercial casting. Opens with an introduction to camera, then moves through soccer, basketball, tennis and volleyball, all captured in a single two-hour session. Cut so each sport reads clearly and quickly, since casting reviews these at speed.</p>
+          </div>
+        </article>
+        <article class="piece piece--wide">
+          <video class="piece-video" controls controlslist="nodownload" playsinline preload="none" poster="assets/images/work/vierra-digital.jpg" src="assets/video/vierra-digital-overview.mp4" width="1280" height="720"></video>
           <div class="piece-text">
             <h3 class="piece-title"><img class="piece-mark" src="assets/images/work/vierra-logo.png" alt="" width="476" height="197" />Vierra Digital</h3>
             <p class="piece-meta mono">Corporate overview film · August 2026</p>
@@ -111,13 +121,15 @@
           </div>
         </article>
         <article class="piece piece--tall">
-          <video class="piece-video" controls playsinline preload="none" poster="assets/images/work/rolling-loud.jpg" src="assets/video/rolling-loud-apparel-campaign.mp4" width="1080" height="1920"></video>
+          <video class="piece-video" controls controlslist="nodownload" playsinline preload="none" poster="assets/images/work/rolling-loud.jpg" src="assets/video/rolling-loud-apparel-campaign.mp4" width="1080" height="1920"></video>
           <div class="piece-text">
             <h3 class="piece-title">Apparel campaign</h3>
             <p class="piece-meta mono">Rolling Loud, Miami · Mar 2026</p>
             <p class="piece-credits">Edit: Hao Bui · Client under NDA</p>
           </div>
         </article>
+        </div>
+        <button class="reel-arrow rail-next" type="button" aria-label="Next film">›</button>
       </div>
     </div>
   </section>
@@ -286,6 +298,7 @@
           <div class="atlas-pins"></div>
         </div>
       </div>
+      <ol class="atlas-key"></ol>
 
       <div class="atlas-head">
         <h2 class="screen-title" data-reveal>Places</h2>
@@ -573,7 +586,7 @@
        playhead that steps to the next clip every few seconds; the clip
        under it fills the screen behind, blurred. Hao's cut-out fades into
        the track.
-       EDIT ME: the statement, the paragraph, the gear line, and
+       EDIT ME: the statement, the paragraph, the gear, software and skills rows, and
        assets/images/about/hao.png — a cut-out on a transparent background, head and
        shoulders at least. The Résumé button opens assets/resume/hao-bui.pdf in a
        pop-up; replace that file to update it. The clips are the <li>s in
@@ -598,7 +611,11 @@
             Based in Boston, happy to travel — if you've got something in
             mind, let's talk.
           </p>
-          <p class="about-gear mono">Sony a7C II · DJI Action 5 Pro · DJI Action 6 Pro</p>
+          <dl class="about-facts mono">
+            <div><dt>Gear</dt><dd>Sony a7C II · DJI Action 5 Pro · DJI Action 6 Pro</dd></div>
+            <div><dt>Software</dt><dd>DaVinci Resolve · Premiere Pro · CapCut · Final Cut Pro</dd></div>
+            <div><dt>Skills</dt><dd>Editing · Color grading · Directing · Lighting · Cinematography · Motion graphics</dd></div>
+          </dl>
           <p class="about-actions">
             <a class="btn" href="assets/resume/hao-bui.pdf" data-resume-open>Résumé</a>
             <a class="btn" href="https://www.instagram.com/directedbyhao/" target="_blank" rel="noopener noreferrer">Instagram</a>

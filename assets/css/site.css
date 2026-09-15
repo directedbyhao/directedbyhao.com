@@ -304,29 +304,39 @@ html.js .headline-text[data-reveal] { transform: none; letter-spacing: 0.08em; }
 html.js .screen-title[data-reveal].is-in { letter-spacing: -0.04em; }
 html.js .headline-text[data-reveal].is-in { letter-spacing: -0.04em; }
 
-/* ---- Work: the client films, one slide each. Stacked by default. On a
-   desktop window with motion allowed site.js adds .is-railed: the inner
-   pins under the bar for the section's whole height, every slide is one
-   content column wide, and the rail moves left by --rail-x as the page
-   scrolls through the section. ---- */
+/* ---- Work: the client films on a rail that scrolls sideways by hand.
+   Each piece is one rail width and snaps into place; the arrows step a
+   piece at a time for a mouse; the scrollbar stays hidden. ---- */
 .rail-hint { margin: 0 0 18px; font-size: 0.78rem; color: var(--accent); }
 html:not(.js) .rail-hint { display: none; }
-.rail { display: flex; flex-direction: column; gap: 40px; }
-.piece { display: flex; flex-wrap: wrap; gap: 24px 36px; align-items: flex-start; }
-.piece-video { display: block; height: auto; max-width: 100%; border-radius: 3px; background: #000; }
-.piece--wide .piece-video { width: min(100%, 720px); aspect-ratio: 16 / 9; }
-.piece--tall .piece-video { width: min(100%, 260px); aspect-ratio: 9 / 16; }
-.piece-text { flex: 1 1 260px; min-width: 0; }
+.rail-stage { position: relative; }
+.rail { display: flex; gap: var(--gutter); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.rail::-webkit-scrollbar { display: none; }
+.piece {
+  --piece-h: clamp(200px, calc(100vh - 480px), 440px);   /* the room under the title on one screen */
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  display: flex;
+  gap: 36px;
+  align-items: flex-start;
+}
+.piece-video { display: block; width: auto; height: auto; max-height: var(--piece-h); max-width: 62%; border-radius: 3px; background: #000; }
+.piece--tall .piece-video { max-width: 40%; }
+.piece-text { flex: 1 1 260px; min-width: 0; padding-right: 32px; }
 .piece-title { display: flex; align-items: center; gap: 10px; margin: 0 0 4px; font-size: 1.05rem; }
 .piece-mark { height: 20px; width: auto; padding: 3px 5px; border-radius: 4px; background: #fff; }
 .piece-meta { margin: 0; font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
 .piece-credits { margin: 6px 0 0; font-size: 0.9rem; color: var(--muted); }
 .piece-note { margin: 10px 0 0; max-width: 56ch; font-size: 0.95rem; line-height: 1.5; }
-.screen--rail.is-railed .screen-inner { position: sticky; top: var(--bar-h); flex: none; height: calc(100vh - var(--bar-h)); overflow: hidden; }
-.screen--rail.is-railed .rail { flex: 1; min-height: 0; flex-direction: row; gap: var(--gutter); transform: translateX(var(--rail-x, 0px)); will-change: transform; }
-.screen--rail.is-railed .piece { flex: 0 0 100%; flex-wrap: nowrap; height: 100%; align-items: flex-start; }
-.screen--rail.is-railed .piece-video { width: auto; height: auto; max-height: 100%; max-width: 62%; }
-.screen--rail.is-railed .piece--tall .piece-video { max-width: 40%; }
+.rail-prev { left: -18px; }
+.rail-next { right: -18px; }
+.reel-arrow:disabled { opacity: 0.3; cursor: default; }
+@media (max-width: 768px) {
+  .piece { flex-wrap: wrap; align-content: flex-start; gap: 16px; }
+  .piece-video, .piece--tall .piece-video { max-width: 100%; max-height: 60vh; }
+  .piece-text { padding-right: 0; }
+  .rail-prev, .rail-next { display: none; }
+}
 
 /* ---- Films and Travel: the reel ----
    .reel-items is the data: one <li> per item holding an <a class="clip">
@@ -475,20 +485,45 @@ html:not(.js) .rail-hint { display: none; }
    map sits at the bottom so they never cover it. A clicked pin opens the
    viewer. */
 .screen--map { justify-content: center; }
+/* The map takes the width the key leaves it; the key's right edge lines
+   up with the content column, like the title's left edge does. */
 .screen--map .atlas {
   position: relative;
   flex: 1;
-  display: flex;
-  flex-wrap: wrap;             /* the no-script places list goes under the map */
-  align-items: flex-end;
-  padding-bottom: 16px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  column-gap: 32px;
+  padding: 0 max(var(--gutter), calc(50% - var(--maxw) / 2 + var(--gutter))) 16px 0;
   min-height: calc(100vh - var(--bar-h));
   min-height: calc(100dvh - var(--bar-h));
 }
 .screen--map .atlas-map {
+  grid-column: 1;
   width: 100%;
   transition: transform 0.6s ease-out;   /* the gentle drift with the pointer */
 }
+/* The key: every place as a button, built by site.js from the places
+   list. Hovering a name lights its pin; the open place stays marked. */
+.atlas-key { grid-column: 2; list-style: none; margin: 0; padding: 0 0 8px; display: flex; flex-direction: column; gap: 2px; }
+.atlas-key:empty { display: none; }
+.key-place {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  width: 100%;
+  padding: 5px 8px;
+  border: 0;
+  border-radius: 3px;
+  background: none;
+  color: var(--paper);
+  font: inherit;
+  font-size: 0.86rem;
+  text-align: left;
+  cursor: pointer;
+}
+.key-place:hover, .key-place:focus-visible, .key-place.is-active { background: rgba(246, 244, 240, 0.08); color: #fff; }
+.key-count { margin-left: auto; font-size: 0.7rem; color: var(--muted); }
 .atlas-head {
   position: absolute;
   z-index: 4;
@@ -498,22 +533,6 @@ html:not(.js) .rail-hint { display: none; }
 .atlas-head .screen-title { margin: 0; }
 
 .lede { font-size: 1.05rem; margin: 0 0 22px; }
-.facts { margin: 0; }
-.facts > div {
-  display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 16px;
-  padding: 12px 0;
-  border-top: 1px solid var(--line);
-}
-.facts dt {
-  font-size: 0.74rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  padding-top: 2px;
-}
-.facts dd { margin: 0; font-size: 0.95rem; }
 
 .atlas-hint { margin: 10px 0 0; font-size: 0.78rem; color: var(--accent); }
 html:not(.js) .atlas-hint { display: none; }
@@ -552,7 +571,7 @@ html:not(.js) .atlas-hint { display: none; }
   from { opacity: 0; transform: translate(-50%, -50%) scale(0.4); }
   to   { opacity: 1; transform: translate(-50%, -50%); }
 }
-.pin:hover, .pin.is-active { z-index: 2; }
+.pin:hover, .pin.is-active, .pin.is-lit { z-index: 2; }
 .pin.is-near { z-index: 3; }
 .pin-dot {
   display: block;
@@ -565,7 +584,8 @@ html:not(.js) .atlas-hint { display: none; }
 }
 .pin:hover .pin-dot,
 .pin:focus-visible .pin-dot,
-.pin.is-active .pin-dot { transform: scale(1.3); box-shadow: 0 0 0 3px var(--ink), 0 0 0 5px var(--accent); }
+.pin.is-active .pin-dot,
+.pin.is-lit .pin-dot { transform: scale(1.3); box-shadow: 0 0 0 3px var(--ink), 0 0 0 5px var(--accent); }
 .pin:focus-visible { outline: none; }
 /* The label is display only; site.js picks the side (data-side) that
    does not cover another pin or label. */
@@ -578,11 +598,11 @@ html:not(.js) .atlas-hint { display: none; }
   color: rgba(246, 244, 240, 0.85);
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
 }
-.pin:hover .pin-name, .pin.is-active .pin-name { color: #fff; }
+.pin:hover .pin-name, .pin.is-active .pin-name, .pin.is-lit .pin-name { color: #fff; }
 /* A label with no clear side on a crowded map waits for its pin to be
    hovered, focused or open. */
 .pin-name.is-crowded { opacity: 0; }
-.pin:hover .pin-name, .pin:focus-visible .pin-name, .pin.is-active .pin-name { opacity: 1; }
+.pin:hover .pin-name, .pin:focus-visible .pin-name, .pin.is-active .pin-name, .pin.is-lit .pin-name { opacity: 1; }
 .pin-name[data-side="top"]    { left: 50%; bottom: calc(50% + 12px); transform: translateX(-50%); }
 .pin-name[data-side="bottom"] { left: 50%; top: calc(50% + 12px); transform: translateX(-50%); }
 .pin-name[data-side="right"]  { left: calc(50% + 14px); top: 50%; transform: translateY(-50%); }
@@ -594,7 +614,7 @@ html:not(.js) .atlas-hint { display: none; }
 
 /* The list is the data. With scripts it hides behind the pins;
    without, it is the section's "Places". */
-.places { list-style: none; width: 100%; margin: 0; padding: 24px var(--gutter) 40px; }
+.places { grid-column: 1 / -1; list-style: none; width: 100%; margin: 0; padding: 24px var(--gutter) 40px; }
 .atlas.is-live .places { display: none; }
 .place + .place { margin-top: 28px; }
 .place-name {
@@ -646,7 +666,16 @@ html:not(.js) .atlas-hint { display: none; }
 }
 .about-text { padding-top: 12px; }
 .about-text .lede { margin: 0; font-size: 0.98rem; line-height: 1.55; }
-.about-gear { margin: 10px 0 0; font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.about-facts { margin: 12px 0 0; font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.about-facts > div { display: grid; grid-template-columns: 5.5em 1fr; gap: 12px; padding: 3px 0; }
+.about-facts dt { opacity: 0.6; }
+.about-facts dd { margin: 0; }
+/* On a short window the copy tightens so the section still holds one screen. */
+@media (max-height: 760px) {
+  .about-text .lede { font-size: 0.92rem; line-height: 1.45; }
+  .about-facts { margin-top: 8px; font-size: 0.7rem; }
+  .about-facts > div { padding: 1px 0; }
+}
 .about-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; }
 .about-actions .btn { padding: 9px 14px; font-size: 0.82rem; }
 /* The photo is anchored to the bottom of its cell so it stands on the
@@ -888,6 +917,11 @@ html.js .about.is-in .timeline-cut.is-current { opacity: 1; transition-delay: 0s
   .tabs a { padding: 0 9px; }
   /* Too small to tap at screen width: the map is 3 screens wide and pans. */
   .atlas-canvas { width: 300vw; margin: 0; }
+  .screen--map .atlas { grid-template-columns: 1fr; align-items: start; padding-right: 0; }
+  .atlas-head { position: static; order: -1; padding: 48px var(--gutter) 20px; }
+  .atlas-key { grid-column: 1; flex-direction: row; flex-wrap: wrap; gap: 6px; padding: 12px var(--gutter) 0; }
+  .key-place { width: auto; gap: 8px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; }
+  .key-count { margin-left: 0; }
   /* Stacked: the figure first, in flow, with room below for its drift. */
   .about { grid-template-columns: 1fr; grid-template-rows: auto; row-gap: 16px; }
   .about-statement, .about-text, .about-figure, .timeline { grid-area: auto; }
@@ -905,7 +939,7 @@ html.js .about.is-in .timeline-cut.is-current { opacity: 1; transition-delay: 0s
   .footer-copy { display: none; }
 }
 @media (max-width: 600px) {
-  .facts > div { grid-template-columns: 1fr; gap: 2px; }
+  .about-facts > div { grid-template-columns: 1fr; gap: 2px; }
 }
 @media (max-width: 420px) {
   .site-header .brand, .tabs { font-size: 0.78rem; }
