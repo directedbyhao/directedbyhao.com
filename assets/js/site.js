@@ -390,6 +390,9 @@
     // dot and label already placed by a small margin. In a crowd it keeps
     // the side covering least; if that side still truly overlaps something,
     // the label is hidden until its pin is hovered, focused or open.
+    // Measuring while the pins are still popping in would read them at a
+    // fraction of their size, so a placement waits for every pin's
+    // animation to finish.
     var LABEL_SIDES = ['top', 'bottom', 'right', 'left', 'top-right', 'top-left', 'bottom-right', 'bottom-left'];
     function placeLabels() {
       var taken = pins.map(function (pin) { return pin.querySelector('.pin-dot').getBoundingClientRect(); });
@@ -408,6 +411,12 @@
         label.classList.toggle('is-crowded', hidden);
         if (!hidden) taken.push(rect);
       });
+    }
+    function placeLabelsWhenStill() {
+      var animations = pins.reduce(function (list, pin) { return list.concat(pin.getAnimations()); }, []);
+      if (!animations.length) { placeLabels(); return; }
+      Promise.all(animations.map(function (animation) { return animation.finished; }))
+        .then(placeLabels, function () {});
     }
     function layoutPins() {
       var activePin = pins.filter(function (pin) { return pin.classList.contains('is-active'); })[0];
@@ -440,7 +449,7 @@
         pinLayer.appendChild(pin);
         pins.push(pin);
       });
-      placeLabels();
+      placeLabelsWhenStill();
     }
 
     // The key lists every place beside the map; a name opens what its pin
