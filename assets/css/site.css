@@ -485,28 +485,61 @@ html:not(.js) .rail-hint { display: none; }
    map sits at the bottom so they never cover it. A clicked pin opens the
    viewer. */
 .screen--map { justify-content: center; }
-/* The map takes the width the key leaves it; the key's right edge lines
-   up with the content column, like the title's left edge does. */
 .screen--map .atlas {
   position: relative;
   flex: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
-  column-gap: 32px;
-  padding: 0 max(var(--gutter), calc(50% - var(--maxw) / 2 + var(--gutter))) 16px 0;
+  display: flex;
+  flex-wrap: wrap;             /* the no-script places list goes under the map */
+  align-items: flex-end;
+  padding-bottom: 16px;
   min-height: calc(100vh - var(--bar-h));
   min-height: calc(100dvh - var(--bar-h));
 }
 .screen--map .atlas-map {
-  grid-column: 1;
   width: 100%;
   transition: transform 0.6s ease-out;   /* the gentle drift with the pointer */
 }
 /* The key: every place as a button, built by site.js from the places
-   list. Hovering a name lights its pin; the open place stays marked. */
-.atlas-key { grid-column: 2; list-style: none; margin: 0; padding: 0 0 8px; display: flex; flex-direction: column; gap: 2px; }
-.atlas-key:empty { display: none; }
+   list, behind a tab at the top right. Open, it is a see-through panel
+   down the map's right edge, so the pins under it still show. Hovering a
+   name lights its pin; the open place stays marked. */
+.atlas-key-tab {
+  position: absolute;
+  z-index: 5;
+  top: 52px;
+  right: max(var(--gutter), calc(50% - var(--maxw) / 2 + var(--gutter)));
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(20, 19, 15, 0.72);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  color: var(--paper);
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+.atlas-key-tab:hover, .atlas-key-tab[aria-expanded="true"] { color: #fff; border-color: rgba(246, 244, 240, 0.5); }
+html:not(.js) .atlas-key-tab { display: none; }
+.atlas-key {
+  position: absolute;
+  z-index: 4;
+  top: 40px;
+  right: max(var(--gutter), calc(50% - var(--maxw) / 2 + var(--gutter)));
+  bottom: 16px;
+  width: 240px;
+  margin: 0;
+  padding: 64px 8px 12px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow-y: auto;
+  background: rgba(20, 19, 15, 0.72);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-left: 1px solid var(--line);
+}
+.atlas-key:not(.is-open) { display: none; }
 .key-place {
   display: flex;
   align-items: baseline;
@@ -614,7 +647,7 @@ html:not(.js) .atlas-hint { display: none; }
 
 /* The list is the data. With scripts it hides behind the pins;
    without, it is the section's "Places". */
-.places { grid-column: 1 / -1; list-style: none; width: 100%; margin: 0; padding: 24px var(--gutter) 40px; }
+.places { list-style: none; width: 100%; margin: 0; padding: 24px var(--gutter) 40px; }
 .atlas.is-live .places { display: none; }
 .place + .place { margin-top: 28px; }
 .place-name {
@@ -917,9 +950,23 @@ html.js .about.is-in .timeline-cut.is-current { opacity: 1; transition-delay: 0s
   .tabs a { padding: 0 9px; }
   /* Too small to tap at screen width: the map is 3 screens wide and pans. */
   .atlas-canvas { width: 300vw; margin: 0; }
-  .screen--map .atlas { grid-template-columns: 1fr; align-items: start; padding-right: 0; }
-  .atlas-head { position: static; order: -1; padding: 48px var(--gutter) 20px; }
-  .atlas-key { grid-column: 1; flex-direction: row; flex-wrap: wrap; gap: 6px; padding: 12px var(--gutter) 0; }
+  /* The title block joins the flow above the map; the key is a row of
+     chips under it, always out; no tab. */
+  .atlas-head { position: static; order: -1; width: 100%; padding: 48px var(--gutter) 20px; }
+  .atlas-key-tab { display: none; }
+  .atlas-key, .atlas-key:not(.is-open) {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+    width: 100%;
+    padding: 12px var(--gutter) 0;
+    background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border: 0;
+  }
   .key-place { width: auto; gap: 8px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; }
   .key-count { margin-left: 0; }
   /* Stacked: the figure first, in flow, with room below for its drift. */

@@ -361,9 +361,17 @@
     var pins = [];
 
     var key = atlas.querySelector('.atlas-key');
+    var keyTab = atlas.querySelector('.atlas-key-tab');
     var keyButtons = [];
 
+    function showKey(open) {
+      key.classList.toggle('is-open', open);
+      keyTab.setAttribute('aria-expanded', String(open));
+      keyTab.textContent = open ? 'All places \u25be' : 'All places \u25b8';
+    }
+
     function openViewer(place, pin, opener) {
+      showKey(false);
       pins.forEach(function (other) { other.classList.toggle('is-active', other === pin); });
       keyButtons.forEach(function (button, k) { button.classList.toggle('is-active', places[k] === place); });
       var media = Array.prototype.slice.call(place.querySelectorAll('.place-media > li'));
@@ -454,6 +462,10 @@
       entry.appendChild(button);
       key.appendChild(entry);
       keyButtons.push(button);
+    });
+    keyTab.addEventListener('click', function () { showKey(!key.classList.contains('is-open')); });
+    atlas.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && key.classList.contains('is-open')) { showKey(false); keyTab.focus(); }
     });
 
     layoutPins();
