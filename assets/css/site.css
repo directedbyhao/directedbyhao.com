@@ -16,7 +16,8 @@
   --muted:      #6b6760;   /* secondary text on paper */
   --line:       rgba(20, 19, 15, 0.14);
 
-  --gutter:     24px;
+  --gutter:     24px;      /* inner gaps */
+  --margin:     max(clamp(24px, 6vw, 96px), calc(50vw - 600px));   /* the page's side margin: 6% of the window, centring a 1200px column when wider */
   --bar-h:      64px;      /* the header bar */
 
   --display:    "Fraunces", Georgia, "Times New Roman", serif;
@@ -92,7 +93,7 @@ html.js .curtain {
   align-items: center;
   justify-content: space-between;
   height: var(--bar-h);
-  padding: 0 var(--gutter);
+  padding: 0 var(--margin);
   background: var(--ink);
   color: var(--paper);
   transition: background 0.3s ease;
@@ -158,7 +159,7 @@ html.js .curtain {
   top: 50%;
   transform: translateY(-50%);
   z-index: 1;
-  padding: 0 var(--gutter);
+  padding: 0 var(--margin);
   overflow: hidden;
   text-align: center;
   color: #fff;
@@ -199,7 +200,7 @@ html.js .curtain {
 
 .hero-socials {
   position: absolute;
-  left: var(--gutter);
+  left: var(--margin);
   bottom: 28px;
   z-index: 2;
   margin: 0;
@@ -211,7 +212,7 @@ html.js .curtain {
 .hero-socials li + li { margin-top: 8px; }
 .hero-role {
   position: absolute;
-  right: var(--gutter);
+  right: var(--margin);
   bottom: 24px;
   z-index: 2;
   margin: 0;
@@ -251,7 +252,7 @@ html.js .hero:not(.is-live) .headline-sub { opacity: 0; transform: translateY(8p
   position: relative;
   z-index: 1;
   width: 100%;
-  padding: 48px var(--gutter) 72px;   /* every section's title sits 48px under the bar, at the gutter */
+  padding: 48px var(--margin) 72px;   /* every section's title sits 48px under the bar, on the page margin */
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -504,7 +505,7 @@ html:not(.js) .rail-hint { display: none; }
   position: absolute;
   z-index: 5;
   top: 52px;
-  right: var(--gutter);
+  right: var(--margin);
   padding: 8px 14px;
   border: 1px solid var(--line);
   border-radius: 999px;
@@ -557,7 +558,7 @@ html:not(.js) .atlas-key-tab { display: none; }
 .atlas-head {
   position: absolute;
   z-index: 4;
-  left: var(--gutter);
+  left: var(--margin);
   top: 48px;
 }
 .atlas-head .screen-title { margin: 0; }
@@ -644,7 +645,7 @@ html:not(.js) .atlas-hint { display: none; }
 
 /* The list is the data. With scripts it hides behind the pins;
    without, it is the section's "Places". */
-.places { list-style: none; width: 100%; margin: 0; padding: 24px var(--gutter) 40px; }
+.places { list-style: none; width: 100%; margin: 0; padding: 24px var(--margin) 40px; }
 .atlas.is-live .places { display: none; }
 .place + .place { margin-top: 28px; }
 .place-name {
@@ -681,11 +682,9 @@ html:not(.js) .atlas-hint { display: none; }
   grid-template-rows: auto 1fr auto;
   column-gap: 20px;
 }
-/* The copy is one block of reading width pushed against Hao's outline:
-   its right edge stays by the figure, the air falls to the left. */
 .about-statement { grid-area: 1 / 1; }
 .about-text { grid-area: 2 / 1; }
-.about-statement, .about-text { justify-self: end; width: min(100%, 44rem); }
+.about-statement, .about-text { max-width: 44rem; }   /* reading width; the figure holds the other edge */
 .about-figure { grid-area: 1 / 2 / 3 / 3; }
 .timeline { grid-area: 3 / 1 / 4 / 3; }
 .about-statement {
@@ -857,7 +856,7 @@ html.js .about.is-in .timeline-cut.is-current { opacity: 1; transition-delay: 0s
 .to-top {
   position: absolute;
   top: 22px;
-  right: var(--gutter);
+  right: var(--margin);
   z-index: 3;
   width: 40px;
   height: 40px;
@@ -871,7 +870,7 @@ html.js .about.is-in .timeline-cut.is-current { opacity: 1; transition-delay: 0s
 .to-top:hover { text-decoration: none; opacity: 0.8; }
 .footer-copy {
   position: absolute;
-  right: var(--gutter);
+  right: var(--margin);
   bottom: 24px;
   z-index: 2;
   margin: 0;
@@ -944,7 +943,7 @@ html.js .about.is-in .timeline-cut.is-current { opacity: 1; transition-delay: 0s
    SMALL SCREENS
    ============================================================ */
 @media (max-width: 768px) {
-  :root { --gutter: 16px; }
+  :root { --gutter: 16px; --margin: 16px; }
   .hero-role { font-size: 1.25rem; }
   .tabs { font-size: 0.84rem; }
   .tabs a { padding: 0 9px; }
@@ -952,7 +951,7 @@ html.js .about.is-in .timeline-cut.is-current { opacity: 1; transition-delay: 0s
   .atlas-canvas { width: 300vw; margin: 0; }
   /* The title block joins the flow above the map; the key is a row of
      chips under it, always out; no tab. */
-  .atlas-head { position: static; order: -1; width: 100%; padding: 48px var(--gutter) 20px; }
+  .atlas-head { position: static; order: -1; width: 100%; padding: 48px var(--margin) 20px; }
   .atlas-key-tab { display: none; }
   .atlas-key, .atlas-key:not(.is-open) {
     position: static;
@@ -961,7 +960,7 @@ html.js .about.is-in .timeline-cut.is-current { opacity: 1; transition-delay: 0s
     flex-wrap: wrap;
     gap: 6px;
     width: 100%;
-    padding: 12px var(--gutter) 0;
+    padding: 12px var(--margin) 0;
     background: none;
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
@@ -972,7 +971,6 @@ html.js .about.is-in .timeline-cut.is-current { opacity: 1; transition-delay: 0s
   /* Stacked: the figure first, in flow, with room below for its drift. */
   .about { grid-template-columns: 1fr; grid-template-rows: auto; row-gap: 16px; }
   .about-statement, .about-text, .about-figure, .timeline { grid-area: auto; }
-  .about-statement, .about-text { justify-self: stretch; width: auto; }
   .about-figure { display: flex; justify-content: flex-end; margin-bottom: -16px; }
   .about-photo { position: static; height: 340px; }
   .timeline { height: 104px; margin-top: 8px; }
