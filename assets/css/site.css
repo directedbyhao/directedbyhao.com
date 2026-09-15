@@ -53,6 +53,7 @@ img { display: block; max-width: 100%; }
 .btn {
   display: inline-block;
   background: transparent;
+  color: inherit;              /* a <button> would otherwise fall back to the browser's black */
   padding: 12px 24px;
   border: 1px solid currentColor;
   border-radius: 2px;
@@ -534,10 +535,10 @@ html:not(.js) .rail-hint { display: none; }
 .lede { font-size: 1.05rem; margin: 0 0 22px; }
 
 /* The head's second line: the hint and the view toggle. */
-.atlas-line { display: flex; align-items: baseline; gap: 18px; margin-top: 10px; }
+.atlas-line { display: flex; align-items: center; gap: 18px; margin-top: 12px; }
 .atlas-hint { margin: 0; font-size: 0.78rem; color: var(--accent); }
-.atlas-toggle { padding: 0; border: 0; background: none; color: var(--paper); font-size: 0.78rem; opacity: 0.8; cursor: pointer; }
-.atlas-toggle:hover, .atlas-toggle:focus-visible { opacity: 1; }
+.atlas-toggle { padding: 8px 14px; font-size: 0.82rem; }
+.atlas-toggle[aria-pressed="true"] { background: #fff; border-color: #fff; color: #000; text-shadow: none; }
 html:not(.js) .atlas-line { display: none; }
 /* The map scrolls sideways when its canvas is wider than it (phones). */
 .atlas-map { position: relative; background: var(--ink); overflow-x: auto; scrollbar-width: none; }
@@ -582,7 +583,7 @@ html:not(.js) .atlas-line { display: none; }
   height: 14px;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: 0 0 0 3px var(--ink);
+  box-shadow: 0 0 0 3px var(--ink), 0 0 0 7px rgba(138, 180, 248, 0.28);   /* the outer halo says the dot is live */
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 .pin:hover .pin-dot,

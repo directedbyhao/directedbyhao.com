@@ -367,7 +367,7 @@
     function showGrid(on) {
       atlas.classList.toggle('is-grid', on);
       toggle.setAttribute('aria-pressed', String(on));
-      toggle.textContent = on ? 'Map \u25b8' : 'All places \u25b8';
+      toggle.textContent = on ? 'Map' : 'All places';
     }
 
     function openViewer(place, pin, opener) {
@@ -510,7 +510,7 @@
       relayoutTimer = setTimeout(layoutPins, 150);
     });
 
-    hint.textContent = places.length + (places.length === 1 ? ' place' : ' places') + ' · click a pin or a name';
+    hint.textContent = places.length + (places.length === 1 ? ' place' : ' places') + ' · click a pin, or see them all \u2192';
     atlas.classList.add('is-live');
   }
 
