@@ -497,64 +497,32 @@ html:not(.js) .rail-hint { display: none; }
   width: 100%;
   transition: transform 0.6s ease-out;   /* the gentle drift with the pointer */
 }
-/* The key: every place as a button, built by site.js from the places
-   list, behind a tab at the top right. Open, it is a see-through panel
-   down the map's right edge, so the pins under it still show. Hovering a
-   name lights its pin; the open place stays marked. */
-.atlas-key-tab {
-  position: absolute;
-  z-index: 5;
-  top: 52px;
-  right: var(--gutter);
-  padding: 8px 14px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: rgba(20, 19, 15, 0.72);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  color: var(--paper);
-  font-size: 0.78rem;
-  cursor: pointer;
-}
-.atlas-key-tab:hover, .atlas-key-tab[aria-expanded="true"] { color: #fff; border-color: rgba(246, 244, 240, 0.5); }
-html:not(.js) .atlas-key-tab { display: none; }
-.atlas-key {
-  position: absolute;
-  z-index: 4;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 300px;
-  margin: 0;
-  padding: 108px 16px 16px 24px;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  overflow-y: auto;
-  background: rgba(20, 19, 15, 0.72);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  border-left: 1px solid var(--line);
-}
-.atlas-key:not(.is-open) { display: none; }
-.key-place {
-  display: flex;
-  align-items: baseline;
-  gap: 14px;
+/* The grid view: one card per place, built by site.js from the places
+   list, standing in for the map when the toggle under the title is on. */
+.atlas-grid {
+  display: none;
   width: 100%;
-  padding: 5px 8px;
-  border: 0;
-  border-radius: 3px;
-  background: none;
-  color: var(--paper);
-  font: inherit;
-  font-size: 0.86rem;
-  text-align: left;
-  cursor: pointer;
+  margin: 0;
+  padding: 0 var(--margin);
+  list-style: none;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 18px;
+  max-height: calc(100dvh - var(--bar-h) - 240px);   /* the room under the head, like the map */
+  overflow-y: auto;
 }
-.key-place:hover, .key-place:focus-visible, .key-place.is-active { background: rgba(246, 244, 240, 0.08); color: #fff; }
-.key-count { margin-left: auto; font-size: 0.7rem; color: var(--muted); }
+.atlas.is-grid .atlas-map { display: none; }
+.atlas.is-grid .atlas-grid { display: grid; }
+.atlas-card { display: block; width: 100%; padding: 0; border: 0; background: none; color: var(--paper); font: inherit; text-align: left; cursor: pointer; }
+.atlas.is-grid .atlas-card { animation: card-in 0.35s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i) * 30ms); }
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+.atlas-card img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 3px; background: var(--surface); }
+.atlas-card:hover img, .atlas-card:focus-visible img, .atlas-card.is-active img { outline: 2px solid var(--accent); outline-offset: 2px; }
+.atlas-card:focus-visible { outline: none; }
+.atlas-card-name { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin: 8px 0 0; font-size: 0.9rem; }
+.atlas-card-count { font-size: 0.7rem; color: var(--muted); }
 .atlas-head {
   position: absolute;
   z-index: 4;
@@ -565,8 +533,12 @@ html:not(.js) .atlas-key-tab { display: none; }
 
 .lede { font-size: 1.05rem; margin: 0 0 22px; }
 
-.atlas-hint { margin: 10px 0 0; font-size: 0.78rem; color: var(--accent); }
-html:not(.js) .atlas-hint { display: none; }
+/* The head's second line: the hint and the view toggle. */
+.atlas-line { display: flex; align-items: baseline; gap: 18px; margin-top: 10px; }
+.atlas-hint { margin: 0; font-size: 0.78rem; color: var(--accent); }
+.atlas-toggle { padding: 0; border: 0; background: none; color: var(--paper); font-size: 0.78rem; opacity: 0.8; cursor: pointer; }
+.atlas-toggle:hover, .atlas-toggle:focus-visible { opacity: 1; }
+html:not(.js) .atlas-line { display: none; }
 /* The map scrolls sideways when its canvas is wider than it (phones). */
 .atlas-map { position: relative; background: var(--ink); overflow-x: auto; scrollbar-width: none; }
 .atlas-map::-webkit-scrollbar { display: none; }
@@ -602,7 +574,7 @@ html:not(.js) .atlas-hint { display: none; }
   from { opacity: 0; transform: translate(-50%, -50%) scale(0.4); }
   to   { opacity: 1; transform: translate(-50%, -50%); }
 }
-.pin:hover, .pin.is-active, .pin.is-lit { z-index: 2; }
+.pin:hover, .pin.is-active { z-index: 2; }
 .pin.is-near { z-index: 3; }
 .pin-dot {
   display: block;
@@ -615,8 +587,7 @@ html:not(.js) .atlas-hint { display: none; }
 }
 .pin:hover .pin-dot,
 .pin:focus-visible .pin-dot,
-.pin.is-active .pin-dot,
-.pin.is-lit .pin-dot { transform: scale(1.3); box-shadow: 0 0 0 3px var(--ink), 0 0 0 5px var(--accent); }
+.pin.is-active .pin-dot { transform: scale(1.3); box-shadow: 0 0 0 3px var(--ink), 0 0 0 5px var(--accent); }
 .pin:focus-visible { outline: none; }
 /* The label is display only; site.js picks the side (data-side) that
    does not cover another pin or label. */
@@ -629,11 +600,11 @@ html:not(.js) .atlas-hint { display: none; }
   color: rgba(246, 244, 240, 0.85);
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
 }
-.pin:hover .pin-name, .pin.is-active .pin-name, .pin.is-lit .pin-name { color: #fff; }
+.pin:hover .pin-name, .pin.is-active .pin-name { color: #fff; }
 /* A label with no clear side on a crowded map waits for its pin to be
    hovered, focused or open. */
 .pin-name.is-crowded { opacity: 0; }
-.pin:hover .pin-name, .pin:focus-visible .pin-name, .pin.is-active .pin-name, .pin.is-lit .pin-name { opacity: 1; }
+.pin:hover .pin-name, .pin:focus-visible .pin-name, .pin.is-active .pin-name { opacity: 1; }
 .pin-name[data-side="top"]    { left: 50%; bottom: calc(50% + 12px); transform: translateX(-50%); }
 .pin-name[data-side="bottom"] { left: 50%; top: calc(50% + 12px); transform: translateX(-50%); }
 .pin-name[data-side="right"]  { left: calc(50% + 14px); top: 50%; transform: translateY(-50%); }
@@ -949,25 +920,9 @@ html.js .about.is-in .timeline-cut.is-current { opacity: 1; transition-delay: 0s
   .tabs a { padding: 0 9px; }
   /* Too small to tap at screen width: the map is 3 screens wide and pans. */
   .atlas-canvas { width: 300vw; margin: 0; }
-  /* The title block joins the flow above the map; the key is a row of
-     chips under it, always out; no tab. */
+  /* The title block joins the flow above the map. */
   .atlas-head { position: static; order: -1; width: 100%; padding: 48px var(--margin) 20px; }
-  .atlas-key-tab { display: none; }
-  .atlas-key, .atlas-key:not(.is-open) {
-    position: static;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 6px;
-    width: 100%;
-    padding: 12px var(--margin) 0;
-    background: none;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-    border: 0;
-  }
-  .key-place { width: auto; gap: 8px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; }
-  .key-count { margin-left: 0; }
+  .atlas-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; max-height: none; }
   /* Stacked: the figure first, in flow, with room below for its drift. */
   .about { grid-template-columns: 1fr; grid-template-rows: auto; row-gap: 16px; }
   .about-statement, .about-text, .about-figure, .timeline { grid-area: auto; }
@@ -1003,6 +958,7 @@ html.js .about.is-in .timeline-cut.is-current { opacity: 1; transition-delay: 0s
   html.js .timeline-cut { opacity: 0.45; transform: none; }
   html.js [data-reveal] { opacity: 1; transform: none; letter-spacing: -0.04em; }
   .atlas.is-in .pin { animation: none; }
+  .atlas.is-grid .atlas-card { animation: none; }
 }
 
 /* ============================================================

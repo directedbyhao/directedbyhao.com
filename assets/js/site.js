@@ -360,20 +360,19 @@
     if (!places.length || !pinLayer) return;
     var pins = [];
 
-    var key = atlas.querySelector('.atlas-key');
-    var keyTab = atlas.querySelector('.atlas-key-tab');
-    var keyButtons = [];
+    var grid = atlas.querySelector('.atlas-grid');
+    var toggle = atlas.querySelector('.atlas-toggle');
+    var cards = [];
 
-    function showKey(open) {
-      key.classList.toggle('is-open', open);
-      keyTab.setAttribute('aria-expanded', String(open));
-      keyTab.textContent = open ? 'All places \u25be' : 'All places \u25b8';
+    function showGrid(on) {
+      atlas.classList.toggle('is-grid', on);
+      toggle.setAttribute('aria-pressed', String(on));
+      toggle.textContent = on ? 'Map \u25b8' : 'All places \u25b8';
     }
 
     function openViewer(place, pin, opener) {
-      showKey(false);
       pins.forEach(function (other) { other.classList.toggle('is-active', other === pin); });
-      keyButtons.forEach(function (button, k) { button.classList.toggle('is-active', places[k] === place); });
+      cards.forEach(function (card, k) { card.classList.toggle('is-active', places[k] === place); });
       var media = Array.prototype.slice.call(place.querySelectorAll('.place-media > li'));
       mediaViewer(place.querySelector('.place-name').textContent, media, 0, opener);
     }
@@ -452,30 +451,30 @@
       placeLabelsWhenStill();
     }
 
-    // The key lists every place beside the map; a name opens what its pin
-    // opens and lights the pin while pointed at. It is built before the pins
-    // so the map, and the labels measured on it, have their final width.
+    // The grid view: one card per place with its first picture, name and
+    // count; a card opens what the pin opens.
     Array.prototype.forEach.call(places, function (place, index) {
-      var button = make('button', 'key-place');
-      button.type = 'button';
+      var card = make('button', 'atlas-card');
+      card.type = 'button';
+      card.style.setProperty('--i', index);
+      var picture = place.querySelector('img').cloneNode();
+      picture.alt = '';
+      var caption = make('p', 'atlas-card-name');
       var name = make('span', '');
       name.textContent = place.querySelector('.place-name').textContent;
-      var count = make('span', 'key-count mono');
+      var count = make('span', 'atlas-card-count mono');
       count.textContent = place.querySelectorAll('.place-media > li').length;
-      button.appendChild(name);
-      button.appendChild(count);
-      button.addEventListener('click', function () { openViewer(place, pins[index], button); });
-      button.addEventListener('pointerenter', function () { pins[index].classList.add('is-lit'); });
-      button.addEventListener('pointerleave', function () { pins[index].classList.remove('is-lit'); });
+      caption.appendChild(name);
+      caption.appendChild(count);
+      card.appendChild(picture);
+      card.appendChild(caption);
+      card.addEventListener('click', function () { openViewer(place, pins[index], card); });
       var entry = make('li', '');
-      entry.appendChild(button);
-      key.appendChild(entry);
-      keyButtons.push(button);
+      entry.appendChild(card);
+      grid.appendChild(entry);
+      cards.push(card);
     });
-    keyTab.addEventListener('click', function () { showKey(!key.classList.contains('is-open')); });
-    atlas.addEventListener('keydown', function (event) {
-      if (event.key === 'Escape' && key.classList.contains('is-open')) { showKey(false); keyTab.focus(); }
-    });
+    toggle.addEventListener('click', function () { showGrid(!atlas.classList.contains('is-grid')); });
 
     layoutPins();
     document.fonts.ready.then(layoutPins);   // label widths change when the web font lands

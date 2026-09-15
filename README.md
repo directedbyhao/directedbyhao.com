@@ -98,8 +98,9 @@ and Travel, with the same text lines. A pin can be a city or a whole region
 item's date-and-place line names the city. Photos go in
 `assets/images/places/<city>/` at about 1200px on the long side, a copy if they are
 also in Travel. The pin draws
-itself and the list behind the "All places" tab at the top right names it
-with its count; clicking either opens everything under it full screen.
+itself, and the "All places" button under the title swaps the map for a grid
+of cards, one per place with its first picture and count; a pin or a card
+opens everything under it full screen.
 
 **Change the tabs** — The header bar in `index.html` has one link per section;
 each points at the section's `id`.
