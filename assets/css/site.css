@@ -16,7 +16,6 @@
   --muted:      #6b6760;   /* secondary text on paper */
   --line:       rgba(20, 19, 15, 0.14);
 
-  --maxw:       1120px;
   --gutter:     24px;
   --bar-h:      64px;      /* the header bar */
 
@@ -252,9 +251,7 @@ html.js .hero:not(.is-live) .headline-sub { opacity: 0; transform: translateY(8p
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 48px var(--gutter) 72px;   /* every section's title sits 48px under the bar */
+  padding: 48px var(--gutter) 72px;   /* every section's title sits 48px under the bar, at the gutter */
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -560,7 +557,7 @@ html:not(.js) .atlas-key-tab { display: none; }
 .atlas-head {
   position: absolute;
   z-index: 4;
-  left: max(var(--gutter), calc(50% - var(--maxw) / 2 + var(--gutter)));   /* the content column's edge */
+  left: var(--gutter);
   top: 48px;
 }
 .atlas-head .screen-title { margin: 0; }
@@ -684,8 +681,11 @@ html:not(.js) .atlas-hint { display: none; }
   grid-template-rows: auto 1fr auto;
   column-gap: 20px;
 }
+/* The copy is one block of reading width pushed against Hao's outline:
+   its right edge stays by the figure, the air falls to the left. */
 .about-statement { grid-area: 1 / 1; }
 .about-text { grid-area: 2 / 1; }
+.about-statement, .about-text { justify-self: end; width: min(100%, 44rem); }
 .about-figure { grid-area: 1 / 2 / 3 / 3; }
 .timeline { grid-area: 3 / 1 / 4 / 3; }
 .about-statement {
@@ -972,6 +972,7 @@ html.js .about.is-in .timeline-cut.is-current { opacity: 1; transition-delay: 0s
   /* Stacked: the figure first, in flow, with room below for its drift. */
   .about { grid-template-columns: 1fr; grid-template-rows: auto; row-gap: 16px; }
   .about-statement, .about-text, .about-figure, .timeline { grid-area: auto; }
+  .about-statement, .about-text { justify-self: stretch; width: auto; }
   .about-figure { display: flex; justify-content: flex-end; margin-bottom: -16px; }
   .about-photo { position: static; height: 340px; }
   .timeline { height: 104px; margin-top: 8px; }
