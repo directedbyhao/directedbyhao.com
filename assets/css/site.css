@@ -17,7 +17,7 @@
   --line:       rgba(20, 19, 15, 0.14);
 
   --gutter:     24px;      /* inner gaps */
-  --margin:     max(clamp(24px, 6vw, 96px), calc(50vw - 600px));   /* the page's side margin: 6% of the window, centring a 1200px column when wider */
+  --margin:     max(clamp(24px, 6vw, 96px), calc(50vw - 600px));   /* the content column's side margin: 6% of the window, centring 1200px when wider; the header, hero, footer and the map's drawer span the window on --gutter */
   --bar-h:      64px;      /* the header bar */
 
   --display:    "Fraunces", Georgia, "Times New Roman", serif;
@@ -93,7 +93,7 @@ html.js .curtain {
   align-items: center;
   justify-content: space-between;
   height: var(--bar-h);
-  padding: 0 var(--margin);
+  padding: 0 var(--gutter);
   background: var(--ink);
   color: var(--paper);
   transition: background 0.3s ease;
@@ -159,7 +159,7 @@ html.js .curtain {
   top: 50%;
   transform: translateY(-50%);
   z-index: 1;
-  padding: 0 var(--margin);
+  padding: 0 var(--gutter);
   overflow: hidden;
   text-align: center;
   color: #fff;
@@ -200,7 +200,7 @@ html.js .curtain {
 
 .hero-socials {
   position: absolute;
-  left: var(--margin);
+  left: var(--gutter);
   bottom: 28px;
   z-index: 2;
   margin: 0;
@@ -212,7 +212,7 @@ html.js .curtain {
 .hero-socials li + li { margin-top: 8px; }
 .hero-role {
   position: absolute;
-  right: var(--margin);
+  right: var(--gutter);
   bottom: 24px;
   z-index: 2;
   margin: 0;
@@ -505,7 +505,7 @@ html:not(.js) .rail-hint { display: none; }
   position: absolute;
   z-index: 5;
   top: 52px;
-  right: var(--margin);
+  right: var(--gutter);
   padding: 8px 14px;
   border: 1px solid var(--line);
   border-radius: 999px;
@@ -856,7 +856,7 @@ html.js .about.is-in .timeline-cut.is-current { opacity: 1; transition-delay: 0s
 .to-top {
   position: absolute;
   top: 22px;
-  right: var(--margin);
+  right: var(--gutter);
   z-index: 3;
   width: 40px;
   height: 40px;
@@ -870,7 +870,7 @@ html.js .about.is-in .timeline-cut.is-current { opacity: 1; transition-delay: 0s
 .to-top:hover { text-decoration: none; opacity: 0.8; }
 .footer-copy {
   position: absolute;
-  right: var(--margin);
+  right: var(--gutter);
   bottom: 24px;
   z-index: 2;
   margin: 0;
